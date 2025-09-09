@@ -193,6 +193,7 @@ const refreshAccessToken = asyncHandler(async(req, res) => {
    throw new ApiError(401, "Unauthorized request")
   }
   
+  
    const decodedToken = jwt.verify(
    incomingRefreshToken,
    process.env.REFRESH_TOKEN_SECRET
@@ -411,8 +412,8 @@ const getUserChannelProfile = asyncHandler(async(req, res) => {
      .status(200)
      .json(
       new ApiResponse
-     )(200, channel[0], "Userchannel fetched successfully")
-
+     (200, channel[0], "Userchannel fetched successfully")
+     )
 })
 
 const getWatchHistory = asyncHandler(async(req, res) => {
