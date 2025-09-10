@@ -76,6 +76,36 @@ const addVideoToPlaylist = asyncHandler(async (req, res) => {
     const {playlistId, videoId} = req.params
     const userId = req.user?._id; // from auth middleware
 
+    if (!playlistId) {
+      throw new ApiError(400, "playlist ID not required")
+    }
+
+    if(!videoId) {
+      throw new ApiError(400, "video ID not required")
+    }
+
+    if(!userId) {
+      throw new ApiError(400, "user ID is required")
+    }
+
+    //find the playlist and update
+    const playList = await Playlist.findByIdAndUpdate(
+      { _id:playlistId, owner:userId}, //ensure only owner can add
+      {$addToSet:{videos:videoId}}, //addToSet prevent duplicates
+      {new:true} // return updated playlist
+    ).populate("videos")
+
+    if (!playList) {
+      throw new ApiError(404, "Playlist not found or you are not the owner");
+    }
+  
+    return res.status(200).json(
+      new ApiResponse(
+        200,
+        playList,
+        "Video added to playlist successfully"
+      )
+    );
 })
 
 const removeVideoFromPlaylist = asyncHandler(async (req, res) => {
