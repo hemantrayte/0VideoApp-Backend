@@ -45,6 +45,7 @@ const toggleCommentLike = asyncHandler(async (req, res) => {
     if (!commentId) {
         throw new ApiError(404, "comment not found")
     }
+
   
     //cheak if user already likes this comment
     const existingLike = await Like.findOne({comment:commentId, likedBy:userId})
@@ -54,7 +55,7 @@ const toggleCommentLike = asyncHandler(async (req, res) => {
         await existingLike.deleteOne();
         return res.status(200).json({
             success: true,
-            message: "Like removed"
+            message: "Comment removed Like"
         });
     } else {
         // User has not liked → create a new like
@@ -64,7 +65,7 @@ const toggleCommentLike = asyncHandler(async (req, res) => {
         });
         return res.status(201).json({
             success: true,
-            message: "Video liked",
+            message: "Comment liked",
             like: newLike
         });
     }
@@ -87,7 +88,7 @@ const toggleTweetLike = asyncHandler(async (req, res) => {
          .status(200)
          .json(new ApiResponse(
             (200),
-            "Like removed"
+            "Tweet Like removed"
          ))
     } else {
         const newLike = await Like.create({
@@ -99,7 +100,7 @@ const toggleTweetLike = asyncHandler(async (req, res) => {
         .json(new ApiResponse(
             200,
             {like: newLike},
-            "video liked"
+            "Tweet Liked"
         ))
     }
 }
