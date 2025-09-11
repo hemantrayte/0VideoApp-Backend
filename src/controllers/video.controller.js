@@ -238,8 +238,41 @@ const deleteVideo = asyncHandler(async (req, res) => {
 })
 
 const togglePublishStatus = asyncHandler(async (req, res) => {
-    const { videoId } = req.params
-})
+  const { videoId } = req.params;
+  const userId = req.user?._id;
+
+  // 1) Validate input
+  if (!videoId) {
+    throw new ApiError(400, "Video ID is required");
+  }
+  if (!mongoose.isValidObjectId(videoId)) {
+    throw new ApiError(400, "Invalid Video ID format");
+  }
+  if (!userId) {
+    throw new ApiError(401, "User not authenticated");
+  }
+
+  // 2) Find the video (must be owned by the user)
+  const video = await Video.findOne({ _id: videoId, owner: userId });
+
+  if (!video) {
+    throw new ApiError(404, "Video not found or you are not allowed to update this video");
+  }
+
+  // 3) Toggle publish status
+  video.isPublished = !video.isPublished;
+  await video.save();
+
+  // 4) Respond
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      { videoId: video._id, isPublished: video.isPublished },
+      `Video ${video.isPublished ? "published" : "unpublished"} successfully`
+    )
+  );
+});
+
 
 export {
     getAllVideos,
