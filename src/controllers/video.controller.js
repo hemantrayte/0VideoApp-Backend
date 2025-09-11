@@ -8,7 +8,10 @@ import {uploadOnCloudinary} from "../utils/cloundinary.js"
 
 
 const getAllVideos = asyncHandler(async (req, res) => {
-  let { page = 1, limit = 10, query = "", sortBy = "createdAt", sortType = "desc", userId } = req.query;
+  let { page = 1, limit = 10, query = "", sortBy = "createdAt", sortType = "desc" } = req.query;
+
+  const userId = req.user._id
+
 
   // 1) Validate and convert pagination parameters
   page = Math.max(1, parseInt(page));
