@@ -75,6 +75,7 @@ const updateTweet = asyncHandler(async (req, res) => {
       throw new ApiError(403, "You are not allowed to update this tweet");
     }
 
+
     tweet.content =content
 
     await tweet.save();
@@ -89,15 +90,20 @@ const deleteTweet = asyncHandler(async (req, res) => {
     const userId = req.user?._id;
     const { tweetId} = req.params;
 
-    const tweet = await Tweet.findOne(tweetId)
+    // const tweet = await Tweet.findOne(tweetId)
+
+    const tweet = await Tweet.findOneAndDelete({
+      _id:tweetId,
+      owner:userId
+    })
     
     if (!tweet) {
       throw new ApiError(404, "Tweet not found");
     }
 
-    if(tweetId.owner.toString() !== userId.toString()) {
-      throw new ApiError(403, "You are not allowed to delete this tweet");
-    }
+    // if(tweetId.owner.toString() !== userId.toString()) {
+    //   throw new ApiError(403, "You are not allowed to delete this tweet");
+    // }
 
     await tweet.deleteOne();
 
