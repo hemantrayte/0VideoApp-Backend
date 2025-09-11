@@ -109,15 +109,54 @@ const addVideoToPlaylist = asyncHandler(async (req, res) => {
 })
 
 const removeVideoFromPlaylist = asyncHandler(async (req, res) => {
-    const {playlistId, videoId} = req.params
-    // TODO: remove video from playlist
+  const { playlistId, videoId } = req.params;
+  const userId = req.user?._id;
 
-})
+  if (!playlistId || !videoId) throw new ApiError(400, "Playlist ID and Video ID are required");
+
+  // 1) fetch to check existence + ownership + whether video exists in playlist
+  const playlist = await Playlist.findOne({ _id: playlistId, owner: userId });
+  if (!playlist) throw new ApiError(404, "Playlist not found or not owned by user");
+
+  if (!playlist.videos.some(v => v.toString() === videoId.toString())) {
+    throw new ApiError(404, "Video not in playlist");
+  }
+
+  // 2) remove the video
+  const updated = await Playlist.findOneAndUpdate(
+    { _id: playlistId, owner: userId },
+    { $pull: { videos: videoId } },
+    { new: true, runValidators: true }
+  ).populate("videos", "title thumbnail");
+
+  return res.status(200).json(new ApiResponse(200, updated, "Video removed from playlist"));
+});
 
 const deletePlaylist = asyncHandler(async (req, res) => {
-    const {playlistId} = req.params
-    // TODO: delete playlist
-})
+  const { playlistId } = req.params;
+  const userId = req.user?._id;
+
+  if (!playlistId) {
+    throw new ApiError(400, "Playlist ID is required");
+  }
+
+  if (!userId) {
+    throw new ApiError(400, "User ID is required");
+  }
+
+  // Find playlist owned by this user
+  const playlist = await Playlist.findOne({ _id: playlistId, owner: userId });
+
+  if (!playlist) {
+    throw new ApiError(404, "Playlist not found or not owned by user");
+  }
+
+  await playlist.deleteOne();
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, {}, "Playlist deleted successfully"));
+});
 
 const updatePlaylist = asyncHandler(async (req, res) => {
     const {playlistId} = req.params
