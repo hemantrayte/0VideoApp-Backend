@@ -92,6 +92,7 @@ const updateComment = asyncHandler(async (req, res) => {
       throw new ApiError(400, "Comment ID is required");
     }
 
+    
     const comment = await Comment.findById(commentId)
 
     if(!comment) {
