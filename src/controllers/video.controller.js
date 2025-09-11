@@ -136,7 +136,6 @@ if (!singleVideo) {
   throw new ApiError(404, "Video not found");
 }
 
-
 //returen responce
  return res
  .status(200)
@@ -152,7 +151,53 @@ if (!singleVideo) {
 
 const updateVideo = asyncHandler(async (req, res) => {
     const { videoId } = req.params
+    const {title, description} = req.body
+    const userId = req.user._id
     //TODO: update video details like title, description, thumbnail
+
+    // 1) Validate input
+  if (!videoId) {
+    throw new ApiError(400, "Video ID is required");
+  }
+  if (!mongoose.isValidObjectId(videoId)) {
+    throw new ApiError(400, "Invalid Video ID format");
+  }
+  if (!userId) {
+    throw new ApiError(401, "User ID is required");
+  }
+
+   // 2) Prepare update data
+   const updateData = {};
+   if (title) updateData.title = title;
+   if (description) updateData.description = description;
+
+   // ✅ Optional: update thumbnail if uploaded
+  if (req.file) {
+    const thumbnailUpload = await uploadOnCloudinary(req.file.path);
+    if (thumbnailUpload) {
+      updateData.thumbnail = thumbnailUpload.secure_url;
+    }
+  }
+
+    // 3) Update video (only if owned by user)
+  const updatedVideo = await Video.findOneAndUpdate(
+    { _id: videoId, owner: userId }, // condition: must be owned by current user
+    { $set: updateData },
+    { new: true }
+  );
+
+  if (!updatedVideo) {
+    throw new ApiError(404, "Video not found or you are not authorized to update it");
+  }
+
+  // 4) Return response
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      updatedVideo,
+      "Video updated successfully"
+    )
+  );
 
 })
 
