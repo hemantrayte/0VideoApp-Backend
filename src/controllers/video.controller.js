@@ -107,6 +107,48 @@ const publishAVideo = asyncHandler(async (req, res) => {
 });
 
 
+const getVideoById = asyncHandler(async (req, res) => {
+  const { videoId } = req.params
+  const userId = req.user._id
+  //TODO: get video by id
+
+  // 1) Validate videoId
+if (!videoId) {
+  throw new ApiError(400, "Video Id is required");
+}
+
+if (!mongoose.isValidObjectId(videoId)) {
+  throw new ApiError(400, "Invalid Video Id format");
+}
+
+// 2) Optional: Ensure user is logged in
+if (!userId) {
+  throw new ApiError(401, "User ID is required");
+}
+
+ // 3) Find video
+const singleVideo = await Video.findById(videoId).populate(
+  "owner",
+  "username fullName avatar"
+);
+
+if (!singleVideo) {
+  throw new ApiError(404, "Video not found");
+}
+
+
+//returen responce
+ return res
+ .status(200)
+ .json(
+  new ApiResponse(
+    200,
+    singleVideo,
+    "video fetched successfully"
+  )
+ )
+})
+
 
 const updateVideo = asyncHandler(async (req, res) => {
     const { videoId } = req.params
