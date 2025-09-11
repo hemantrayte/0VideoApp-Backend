@@ -203,7 +203,38 @@ const updateVideo = asyncHandler(async (req, res) => {
 
 const deleteVideo = asyncHandler(async (req, res) => {
     const { videoId } = req.params
+    const userId = req.user?._id
     //TODO: delete video
+
+      // 1) Validate input
+  if (!videoId) {
+    throw new ApiError(400, "Video ID is required");
+  }
+
+  if (!mongoose.isValidObjectId(videoId)) {
+    throw new ApiError(400, "Invalid Video ID format");
+  }
+
+
+  // 2) Delete video (only if owned by user)
+  const deletedVideo = await Video.findOneAndDelete({
+    _id: videoId,
+    owner: userId,
+  });
+
+  if (!deletedVideo) {
+    throw new ApiError(
+      404,
+      "Video not found or you are not allowed to delete this video"
+    );
+  }
+
+
+   // 3) Respond
+  return res
+    .status(200)
+    .json(new ApiResponse(200, {}, "Video deleted successfully"));
+
 })
 
 const togglePublishStatus = asyncHandler(async (req, res) => {
