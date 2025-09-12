@@ -2,6 +2,7 @@ import Home from './pages/Home'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import { Outlet } from 'react-router-dom'
+import Signup from './pages/Signup'
 
 function App() {
 
@@ -10,7 +11,8 @@ function App() {
      {/* <Header />
      <Outlet />
      <Footer /> */}
-     <Home />
+     {/* <Home /> */}
+     <Signup />
     </>
   )
 }

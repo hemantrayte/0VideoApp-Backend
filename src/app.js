@@ -1,19 +1,25 @@
 import express from 'express'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
+import { errorHandler } from "./middlewares/error.middleware.js";
 
 const app = express()
 
+app.use(cors())
 
-app.use(cors({
-  origin: process.env.CORS_ORIGIN,
-  credentials: true
-}))
+// app.use(cors({
+//   origin: process.env.CORS_ORIGIN,
+//   methods: ["GET", "POST", "PUT", "DELETE"],
+//   credentials: true
+// }))
 app.use(cookieParser())
 
 app.use(express.json({ limit: "16kb" }))
 app.use(express.urlencoded({ extended: true, limit: "16kb" }))
 app.use(express.static("public"))
+
+// ✅ Error handling middleware
+
 
 
 //routes import
@@ -40,5 +46,6 @@ app.use("/api/v1/likes", likeRouter)//done
 app.use("/api/v1/playlist", playlistRouter)//done
 app.use("/api/v1/dashboard", dashboardRouter)
 
+app.use(errorHandler);
 
 export { app }
