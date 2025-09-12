@@ -1,70 +1,16 @@
-// import React, { useEffect, useState } from 'react';
-// import axios from "axios";
-
-// const Home = () => {
-//   const url = "http://localhost:8000/api/v1/videos";
-//   const [videos, setVideos] = useState([]);
-
-//   const allVideos = async () => {
-//     try {
-//       const response = await axios.get(url, {
-//         headers: {
-//           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-//         },
-//       });
-
-//       // Access videos array properly
-//       setVideos(response.data.data.videos);
-//       console.log(response.data.data.videos); // for debugging
-//     } catch (error) {
-//       console.log(error.response?.data?.message || error.message, "while fetching all videos");
-//     }
-//   };
-
-//   useEffect(() => {
-//     allVideos();
-//   }, []);
-
-//   return (
-//     <div className="min-h-screen bg-gray-100 p-4">
-//       <h1 className="text-2xl font-bold mb-4">All Videos</h1>
-//       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-//         {videos.length > 0 ? (
-//           videos.map((video) => (
-//             <div key={video._id} className="bg-white p-4 rounded-lg shadow">
-//               <img
-//                 src={video.thumbnail}
-//                 alt={video.title}
-//                 className="w-full h-40 object-cover rounded"
-//               />
-//               <h2 className="mt-2 font-semibold text-gray-700">{video.title}</h2>
-//               <p className="text-sm text-gray-500">{video.description}</p>
-//             </div>
-//           ))
-//         ) : (
-//           <p>No videos available.</p>
-//         )}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Home;
-
-
 import React, { useEffect, useState } from 'react';
-import api from '../Api/api'; // if you want to use your api helper
+import api from '../Api/api';
 
 const Home = () => {
   const [videos, setVideos] = useState([]);
+  const [playingVideo, setPlayingVideo] = useState(null); // store currently playing video ID
 
   const fetchVideos = async () => {
     try {
-      const response = await api.get("/videos"); // automatically includes token from api helper
+      const response = await api.get("/videos");
       setVideos(response.data.data.videos);
-      console.log(response.data.data.videos);
     } catch (error) {
-      console.log(error.response?.data?.message || error.message, "while fetching videos");
+      console.log(error.response?.data?.message || error.message);
     }
   };
 
@@ -78,12 +24,42 @@ const Home = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {videos.length > 0 ? (
           videos.map((video) => (
-            <div key={video._id} className="bg-white shadow rounded-lg overflow-hidden">
-              <img
-                src={video.thumbnail}
-                alt={video.title}
-                className="w-full h-48 object-cover"
-              />
+            <div key={video._id} className="bg-white shadow rounded-lg overflow-hidden relative">
+              {playingVideo === video._id ? (
+                // Video player
+                <video
+                  src={video.videoFile}
+                  controls
+                  autoPlay
+                  className="w-full h-48 object-cover bg-black"
+                  onEnded={() => setPlayingVideo(null)} // reset thumbnail after video ends
+                />
+              ) : (
+                // Thumbnail with play button
+                <div
+                  className="relative cursor-pointer"
+                  onClick={() => setPlayingVideo(video._id)}
+                >
+                  <img
+                    src={video.thumbnail}
+                    alt={video.title}
+                    className="w-full h-48 object-cover"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="bg-white bg-opacity-75 rounded-full p-3">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-10 w-10 text-red-600"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               <div className="p-4">
                 <h2 className="text-lg font-semibold">{video.title}</h2>
                 <p className="text-sm text-gray-500">{video.description}</p>
@@ -98,7 +74,7 @@ const Home = () => {
                 <div className="flex justify-between mt-2 text-sm text-gray-400">
                   <span>Views: {video.views}</span>
                   <span>Duration: {video.duration}s</span>
-                  {/* <span>{video.isPublished ? "Published" : "Draft"}</span> */}
+                  <span>{video.isPublished ? "Published" : "Draft"}</span>
                 </div>
               </div>
             </div>
