@@ -10,7 +10,7 @@ const Home = () => {
      const responce = await data.responce
      console.log(responce)
     } catch (error) {
-      console.log(error, "while fetch all users")
+      console.log(error.response.data.message, "while fetch all users")
     }
  }
 

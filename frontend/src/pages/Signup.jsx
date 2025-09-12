@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import api from "../Api/api"; // import the helper
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -9,7 +10,9 @@ const Signup = () => {
     password: "",
   });
 
-  const url="http://localhost:8000/api/v1/users/register";
+
+  const navigate = useNavigate();
+
 
   const [avatar, setAvatar] = useState(null);
   const [coverImage, setCoverImage] = useState(null);
@@ -38,14 +41,24 @@ const Signup = () => {
       data.append("password", formData.password);
       if (avatar) data.append("avatar", avatar);
       if (coverImage) data.append("coverImage", coverImage);
-
-      const res = await axios.post(url, data, {
+  
+      // Use API helper instead of axios
+      const res = await api.post("/users/register", data, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-
+  
       setMessage(res.data.message || "User registered successfully!");
-    } catch(error) {
-      console.log(error)
+
+
+      setFormData({
+        fullName: "",
+        email: "",
+        username: "",
+        password: "",
+      });
+      navigate("/");
+    } catch (error) {
+      console.log(error);
       setMessage(error.response?.data?.message || "Something went wrong");
     }
   };
