@@ -10,7 +10,7 @@ import {uploadOnCloudinary} from "../utils/cloundinary.js"
 const getAllVideos = asyncHandler(async (req, res) => {
   let { page = 1, limit = 10, query = "", sortBy = "createdAt", sortType = "desc" } = req.query;
 
-  const userId = req.user._id
+  // const userId = req.user._id
 
 
   // 1) Validate and convert pagination parameters
@@ -28,9 +28,9 @@ const getAllVideos = asyncHandler(async (req, res) => {
     ];
   }
 
-  if (!userId) {
-    throw new ApiError(404, "user ID is required") // filter by specific user
-  }
+  // if (!userId) {
+  //   throw new ApiError(404, "user ID is required") // filter by specific user
+  // }
 
   // 3) Validate sort field
   const allowedSortFields = ["createdAt", "title", "views"];
