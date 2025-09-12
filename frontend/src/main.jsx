@@ -4,10 +4,10 @@ import './index.css'
 import App from './App.jsx'
 import { BrowserRouter, createBrowserRouter } from "react-router-dom";
 import Home from './pages/Home.jsx';
-import Signup from './pages/Signup.jsx';
+import Signup from './pages/user/Signup.jsx';
 
 import { RouterProvider } from 'react-router-dom';
-import Login from './pages/Login.jsx';
+import Login from './pages/user/Login.js';
 
 const router = createBrowserRouter([
   {

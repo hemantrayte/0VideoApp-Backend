@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../Api/api"; // import the helper
+import api from "../../Api/api"; // import the helper
 
 const Signup = () => {
   const [formData, setFormData] = useState({
