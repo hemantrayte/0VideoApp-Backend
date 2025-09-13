@@ -54,7 +54,7 @@ const Header = () => {
       {/* Right Section - Links */}
       <div className="flex items-center space-x-3">
         <Link
-          to="/upload"
+          to="/videos/upload"
           className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
         >
           <Video className="h-6 w-6 text-gray-700 dark:text-gray-200" />

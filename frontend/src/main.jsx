@@ -20,6 +20,7 @@ import ChangePassword from './pages/user/ChangePassword.jsx'
 import UpdateVideo from './pages/video/UpdateVideo.jsx';
 import DeleteVideo from './pages/video/DeleteVideo.jsx';
 import PublishStatus from './pages/video/PublishStatus.jsx';
+import UploadVideo from './pages/video/UploadVideo.jsx';
 
 
 const router = createBrowserRouter([
@@ -65,6 +66,10 @@ const router = createBrowserRouter([
       {
         path:"videos",
         element:<AllVideos />
+      },
+      {
+        path:"videos/upload",
+        element:<UploadVideo />
       },
       {
         path:"videos/:id",

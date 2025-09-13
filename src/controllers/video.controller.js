@@ -90,6 +90,7 @@ const publishAVideo = asyncHandler(async (req, res) => {
   if (!videoUpload || !thumbnailUpload) {
     return res.status(500).json({ message: "Error uploading files to Cloudinary" });
   }
+  
 
   // 4) Create video entry in MongoDB
   const newVideo = await Video.create({
