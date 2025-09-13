@@ -1,23 +1,36 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import api from "../../Api/api";
 
 const SingleVideo = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+
   const [video, setVideo] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
 
   const fetchSingleVideo = async () => {
     try {
       const response = await api.get(`/videos/${id}`);
       setVideo(response.data.data);
-      console.log(response.data.data);
+      console.log(response.data.data)
     } catch (error) {
       console.log(error.response?.data?.message || error.message);
     }
   };
 
+  const fetchCurrentUser = async () => {
+    try {
+      const res = await api.get("/users/current-user"); // make sure you have this API
+      setCurrentUser(res.data.data);
+    } catch (error) {
+      console.log("Could not fetch current user", error);
+    }
+  };
+
   useEffect(() => {
     fetchSingleVideo();
+    fetchCurrentUser();
   }, [id]);
 
   if (!video) {
@@ -29,6 +42,8 @@ const SingleVideo = () => {
       </div>
     );
   }
+
+  const isOwner = currentUser?._id === video.owner._id;
 
   return (
     <div className="flex flex-col lg:flex-row max-w-6xl mx-auto p-4 space-y-6 lg:space-y-0 lg:space-x-6">
@@ -67,9 +82,21 @@ const SingleVideo = () => {
               <p className="text-sm text-gray-500">{video.owner.fullName}</p>
             </div>
           </div>
-          <button className="bg-red-600 text-white px-4 py-2 rounded-full font-semibold hover:bg-red-700 transition">
-            Subscribe
-          </button>
+
+          <div className="flex items-center space-x-3">
+            {isOwner ? (
+              <button
+                onClick={() => navigate(`/videos/update/${video._id}`)}
+                className="bg-yellow-500 text-white px-4 py-2 rounded-full font-semibold hover:bg-yellow-600 transition"
+              >
+                Update
+              </button>
+            ) : (
+              <button className="bg-red-600 text-white px-4 py-2 rounded-full font-semibold hover:bg-red-700 transition">
+                Subscribe
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Description */}
@@ -80,7 +107,7 @@ const SingleVideo = () => {
         </div>
       </div>
 
-      {/* Right: Suggested videos (Placeholder for now) */}
+      {/* Right: Suggested videos (Placeholder) */}
       <div className="w-full lg:w-80">
         <h2 className="text-lg font-semibold mb-3 text-gray-800 dark:text-gray-100">
           Suggested Videos
@@ -99,7 +126,6 @@ const SingleVideo = () => {
               <p className="text-sm text-gray-500">Channel Name</p>
             </div>
           </div>
-          {/* You can map other suggested videos here */}
         </div>
       </div>
     </div>
