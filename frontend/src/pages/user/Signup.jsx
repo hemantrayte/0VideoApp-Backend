@@ -96,7 +96,7 @@ const Signup = () => {
           />
 
           <input
-            type="email"
+           
             name="email"
             placeholder="Email Address"
             value={formData.email}
