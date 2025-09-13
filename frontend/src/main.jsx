@@ -18,6 +18,7 @@ import UpdateAvatar from './pages/user/UpdateAvatar.jsx';
 import UpdateCovertImage from './pages/user/UpdateCoverImage.jsx'
 import ChangePassword from './pages/user/ChangePassword.jsx'
 import UpdateVideo from './pages/video/UpdateVideo.jsx';
+import DeleteVideo from './pages/video/DeleteVideo.jsx';
 
 
 const router = createBrowserRouter([
@@ -71,6 +72,10 @@ const router = createBrowserRouter([
       {
         path:"videos/update/:id",
         element:<UpdateVideo />
+      },
+      {
+        path:"videos/delete/:id",
+        element:<DeleteVideo />
       }
     ]
   }
