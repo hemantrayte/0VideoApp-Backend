@@ -12,6 +12,10 @@ import Login from './pages/user/Login.jsx'
 import Logout from './pages/user/Logout.jsx'
 import AllVideos from './pages/video/AllVideos.jsx'
 import SingleVideo from './pages/video/SingleVideo.jsx';
+import UpdateAccount from './pages/user/UpdateAccount.jsx'
+import CurrentUser from './pages/user/CurrentUser.jsx';
+
+
 const router = createBrowserRouter([
   {
     path:"/",
@@ -30,7 +34,15 @@ const router = createBrowserRouter([
         path:"log-out",
         element:<Logout />
       },
-
+      {
+            path:"user/update",
+            element:<UpdateAccount />
+      },
+      {
+        path:"user/current-user",
+        element:<CurrentUser />
+      }
+      ,
       //video routes
       {
         path:"videos",

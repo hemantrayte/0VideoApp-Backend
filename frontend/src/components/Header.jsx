@@ -67,7 +67,7 @@ const Header = () => {
           <span className="absolute top-2 right-2 inline-block w-2 h-2 bg-red-500 rounded-full"></span>
         </Link>
         <Link
-          to="/profile"
+          to="/user/current-user"
           className="p-1 rounded-full border border-gray-300 dark:border-gray-700 hover:shadow-md"
         >
           <User className="h-6 w-6 text-gray-700 dark:text-gray-200" />
