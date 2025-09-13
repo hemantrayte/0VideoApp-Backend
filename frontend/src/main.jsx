@@ -15,6 +15,8 @@ import SingleVideo from './pages/video/SingleVideo.jsx';
 import UpdateAccount from './pages/user/UpdateAccount.jsx'
 import CurrentUser from './pages/user/CurrentUser.jsx';
 import UpdateAvatar from './pages/user/UpdateAvatar.jsx';
+import UpdateCovertImage from './pages/user/UpdateCoverImage.jsx'
+import ChangePassword from './pages/user/ChangePassword.jsx'
 
 
 const router = createBrowserRouter([
@@ -42,8 +44,15 @@ const router = createBrowserRouter([
       {
         path:"user/update/avatar",
         element:<UpdateAvatar />
-      }
-      ,
+      },
+      {
+        path:"user/update/cover-image",
+        element:<UpdateCovertImage />
+      },
+      {
+        path:"user/update/password",
+        element:<ChangePassword />
+      },
       {
         path:"user/current-user",
         element:<CurrentUser />
