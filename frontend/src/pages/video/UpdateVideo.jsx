@@ -25,8 +25,12 @@ const UpdateVideo = () => {
     }
   };
 
-  const handleClick = async() => {
+  const handleDeleteClick = async() => {
     navigate(`/videos/delete/${id}`)
+  }
+
+  const handlePriveteClick = () => {
+     navigate(`/videos/status/${id}`)
   }
 
   const fetchSingleVideo = async () => {
@@ -135,10 +139,18 @@ const UpdateVideo = () => {
         </form>
         <br></br>
         <button
-            onClick={handleClick}
+            onClick={handleDeleteClick}
             className="w-full bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-md font-semibold transition"
           >
             Delete Video
+          </button>
+          <br></br>
+          <br></br>
+          <button
+            onClick={handlePriveteClick}
+            className="w-full bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-md font-semibold transition"
+          >
+            Change Status of Video
           </button>
       </div>
     </div>
