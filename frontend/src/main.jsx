@@ -9,20 +9,36 @@ import Home from './pages/Home.jsx';
 import { RouterProvider } from 'react-router-dom';
 import Signup from './pages/user/Signup.jsx';
 import Login from './pages/user/Login.jsx'
-
+import Logout from './pages/user/Logout.jsx'
+import AllVideos from './pages/video/AllVideos.jsx'
+import SingleVideo from './pages/video/SingleVideo.jsx';
 const router = createBrowserRouter([
   {
     path:"/",
     element:<App />,
     children:[
-      {path:"/", element:<Home />},
+      {path:"/", element:<AllVideos />},
       {
-        path:"/sign-up",
+        path:"signup",
         element:<Signup />
       },
       {
-        path:"/log-in",
+        path:"login",
         element:<Login/>
+      },
+      {
+        path:"log-out",
+        element:<Logout />
+      },
+
+      //video routes
+      {
+        path:"videos",
+        element:<AllVideos />
+      },
+      {
+        path:"videos/:id",
+        element:<SingleVideo />
       }
     ]
   }

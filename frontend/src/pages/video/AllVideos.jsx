@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import api from '../../Api/api';
+import { Link, useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [videos, setVideos] = useState([]);
   const [playingVideo, setPlayingVideo] = useState(null); // store currently playing video ID
+  const navigate = useNavigate();
 
   const fetchVideos = async () => {
     try {
@@ -13,6 +15,14 @@ const Home = () => {
       console.log(error.response?.data?.message || error.message);
     }
   };
+
+  // const handleClick = async(e) => {
+  //   try {
+  //     navigate(`/videos/${e.target._id}`);
+  //   } catch (error) {
+  //     console.log(error.response?.data?.message || error.message);
+  //   }
+  // }
 
   useEffect(() => {
     fetchVideos();
@@ -24,7 +34,12 @@ const Home = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {videos.length > 0 ? (
           videos.map((video) => (
-            <div key={video._id} className="bg-white shadow rounded-lg overflow-hidden relative">
+            <div
+           
+             key={video._id} 
+             className="bg-white shadow rounded-lg overflow-hidden relative"
+             onClick={() => navigate(`/videos/${video._id}`)}
+             >
               {playingVideo === video._id ? (
                 // Video player
                 <video

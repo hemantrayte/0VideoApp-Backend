@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../Api/api"; // your axios helper
+import api from "../../Api/api"; // your axios helper
 
 const Logout = () => {
   const navigate = useNavigate();

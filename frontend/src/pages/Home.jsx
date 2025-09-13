@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import api from '../Api/api';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   const [videos, setVideos] = useState([]);
@@ -80,7 +81,19 @@ const Home = () => {
             </div>
           ))
         ) : (
-          <p>No videos available.</p>
+          <div className="flex flex-col items-center justify-center p-6 bg-white dark:bg-gray-800 rounded-xl shadow-md">
+  <p className="text-lg font-medium text-gray-800 dark:text-gray-200 mb-4">
+    No videos available. Please login
+  </p>
+  <Link
+    to="/login"
+    className="px-6 py-2 bg-red-600 text-white font-semibold rounded-lg shadow hover:bg-red-700 transition duration-200"
+  >
+    Login
+  </Link>
+</div>
+
+
         )}
       </div>
     </div>

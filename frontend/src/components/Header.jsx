@@ -1,8 +1,25 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { Search, Bell, Video, User, Menu } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { Search, Bell, Video, User, Menu, LogOut } from "lucide-react";
+import api from "../Api/api";
 
 const Header = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await api.post("/users/logout");
+
+      // Clear token from localStorage
+      localStorage.removeItem("accessToken");
+
+      // Redirect user to login page
+      navigate("/login");
+    } catch (error) {
+      console.error(error.response?.data?.message || "Logout failed");
+    }
+  };
+
   return (
     <header className="flex items-center justify-between px-4 py-2 bg-white shadow-md dark:bg-gray-900 sticky top-0 z-50">
       {/* Left Section - Menu + Logo */}
@@ -47,7 +64,6 @@ const Header = () => {
           className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 relative"
         >
           <Bell className="h-6 w-6 text-gray-700 dark:text-gray-200" />
-          {/* Notification dot */}
           <span className="absolute top-2 right-2 inline-block w-2 h-2 bg-red-500 rounded-full"></span>
         </Link>
         <Link
@@ -56,6 +72,14 @@ const Header = () => {
         >
           <User className="h-6 w-6 text-gray-700 dark:text-gray-200" />
         </Link>
+
+        {/* Logout button (icon style) */}
+        <button
+          onClick={handleLogout}
+          className="p-2 rounded-full border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800"
+        >
+          <LogOut className="h-6 w-6 text-red-600" />
+        </button>
       </div>
     </header>
   );
