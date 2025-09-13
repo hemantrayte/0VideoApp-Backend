@@ -11,14 +11,18 @@ const UpdateAccount = () => {
 
   const [message, setMessage] = useState("");
 
+ 
+
   const navigate = useNavigate();
 
-  const handleInputChange = async(e) => {
-      setCurrentUser({
-        ...currentUser,
-        [e.target.name]:e.target.value
-      })
+  const handleInputChange = async (e) => {
+    setCurrentUser({
+      ...currentUser,
+      [e.target.name]: e.target.value
+    })
   }
+
+
 
   const fetchUser = async () => {
     try {
@@ -30,10 +34,10 @@ const UpdateAccount = () => {
     }
   };
 
-  const handleSubmit = async(e) => {
-  e.preventDefault()
+  const handleSubmit = async (e) => {
+    e.preventDefault()
     try {
-      const response = await api.patch("/users/update-account",currentUser , {
+      const response = await api.patch("/users/update-account", currentUser, {
         headers: { "Content-Type": "application/json" },
       })
 
@@ -51,21 +55,28 @@ const UpdateAccount = () => {
 
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-      <input
-       value={currentUser.fullName || ""}
-       onChange={handleInputChange}
-       name='fullName'
-        />
-       <input
-    value={currentUser.email || ""}
-    onChange={handleInputChange}
-    name='email'
-        />
-        <button type='submit'>Save Changes</button>
-      </form>
-    </div>
+    
+      <div>
+        <div>
+          <button
+          onClick={() =>navigate("/user/update/avatar")}
+          >Update Avatar</button>
+        </div>
+        <form onSubmit={handleSubmit}>
+          <input
+            value={currentUser.fullName || ""}
+            onChange={handleInputChange}
+            name='fullName'
+          />
+          <input
+            value={currentUser.email || ""}
+            onChange={handleInputChange}
+            name='email'
+          />
+          <button type='submit'>Save Changes</button>
+        </form>
+      </div>
+
   )
 }
 

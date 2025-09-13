@@ -14,6 +14,7 @@ import AllVideos from './pages/video/AllVideos.jsx'
 import SingleVideo from './pages/video/SingleVideo.jsx';
 import UpdateAccount from './pages/user/UpdateAccount.jsx'
 import CurrentUser from './pages/user/CurrentUser.jsx';
+import UpdateAvatar from './pages/user/UpdateAvatar.jsx';
 
 
 const router = createBrowserRouter([
@@ -38,6 +39,11 @@ const router = createBrowserRouter([
             path:"user/update",
             element:<UpdateAccount />
       },
+      {
+        path:"user/update/avatar",
+        element:<UpdateAvatar />
+      }
+      ,
       {
         path:"user/current-user",
         element:<CurrentUser />
