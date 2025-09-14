@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Search, Bell, Video, User, Menu, LogOut } from "lucide-react";
+import { Search, Bell, Video, User, Menu, LogOut, Plus } from "lucide-react";
 import api from "../Api/api";
 
 const Header = () => {
@@ -71,6 +71,13 @@ const Header = () => {
           className="p-1 rounded-full border border-gray-300 dark:border-gray-700 hover:shadow-md"
         >
           <User className="h-6 w-6 text-gray-700 dark:text-gray-200" />
+        </Link>
+
+        <Link
+          to="/tweet/create"
+          className="p-1 rounded-full border border-gray-300 dark:border-gray-700 hover:shadow-md"
+        >
+          <Plus className="h-6 w-6 text-gray-700 dark:text-gray-200" />
         </Link>
 
         {/* Logout button (icon style) */}

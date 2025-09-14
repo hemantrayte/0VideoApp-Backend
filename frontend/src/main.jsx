@@ -21,6 +21,7 @@ import UpdateVideo from './pages/video/UpdateVideo.jsx';
 import DeleteVideo from './pages/video/DeleteVideo.jsx';
 import PublishStatus from './pages/video/PublishStatus.jsx';
 import UploadVideo from './pages/video/UploadVideo.jsx';
+import CreatePost from './pages/tweet/CreateTweet.jsx';
 
 
 const router = createBrowserRouter([
@@ -86,7 +87,14 @@ const router = createBrowserRouter([
       {
         path:"videos/status/:id",
         element:<PublishStatus />
+      },
+
+      //tweet post community post
+      {
+        path:"tweet/create",
+        element:<CreatePost />
       }
+
     ]
   }
 ])
