@@ -76,7 +76,7 @@ const CreatePost = () => {
     e.preventDefault();
     try {
       const response = await api.post(
-        "/posts",
+        "/tweets",
         { content: post }, // assuming backend expects {content}
         { headers: { "Content-Type": "application/json" } }
       );
@@ -126,6 +126,7 @@ const CreatePost = () => {
             >
               Post
             </button>
+
           </div>
 
           {/* Message */}
@@ -135,6 +136,11 @@ const CreatePost = () => {
             </p>
           )}
         </form>
+        {/* <button
+              className="bg-red-600 hover:bg-red-700 disabled:opacity-50 text-white px-4 py-2 rounded-full font-semibold transition"
+            >
+              Your Tweets
+            </button> */}
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Search, Bell, Video, User, Menu, LogOut, Plus } from "lucide-react";
+import { Search, Bell, Video, User, Menu, LogOut, Plus, ChartArea, ChartBar } from "lucide-react";
 import api from "../Api/api";
 
 const Header = () => {
@@ -63,7 +63,7 @@ const Header = () => {
           to="/notifications"
           className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 relative"
         >
-          <Bell className="h-6 w-6 text-gray-700 dark:text-gray-200" />
+          <ChartBar className="h-6 w-6 text-gray-700 dark:text-gray-200" />
           <span className="absolute top-2 right-2 inline-block w-2 h-2 bg-red-500 rounded-full"></span>
         </Link>
         <Link
