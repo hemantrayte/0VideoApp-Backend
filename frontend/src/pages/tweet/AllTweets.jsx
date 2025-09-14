@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const AllTweets = () => {
   const [tweets, setTweets] = useState([]);
   const [message, setMessage] = useState("");
+  const [currentUser, setCurrentUser] = useState(null)
 
   const navigate = useNavigate();
 
@@ -19,8 +20,22 @@ const AllTweets = () => {
     }
   };
 
+  
+
+  const fetchUser = async () => {
+    try {
+      const response = await api.get("users/current-user");
+      console.log(response.data.data);
+      setCurrentUser(response.data.data);
+      setMessage(response.data.message)
+    } catch (error) {
+      setMessage(error.response?.data?.message || "Something went wrong");
+    }
+  };
+
   useEffect(() => {
     fetchAllTweet();
+    fetchUser()
   }, []);
 
   return (
@@ -37,6 +52,15 @@ const AllTweets = () => {
           className="px-4 py-2 bg-red-600 text-white rounded-lg shadow hover:bg-red-700 transition duration-200"
         >
           Create Tweet
+        </button>
+      </div>
+
+      <div className="flex justify-end mb-4">
+        <button
+          onClick={() => navigate(`/tweets/${currentUser._id}`)}
+          className="px-4 py-2 bg-red-600 text-white rounded-lg shadow hover:bg-red-700 transition duration-200"
+        >
+          Your Tweet
         </button>
       </div>
 
