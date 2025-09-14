@@ -65,7 +65,7 @@
 
 // export default CreateTweet;
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import api from "../../Api/api";
 import { useNavigate } from "react-router-dom";
 
@@ -74,6 +74,20 @@ const CreatePost = () => {
   const [message, setMessage] = useState("");
 
   const navigate = useNavigate()
+
+  const [currentUser, setCurrentUser] = useState(null)
+
+  const fetchUser = async () => {
+    try {
+      const response = await api.get("users/current-user");
+      console.log(response.data.data);
+      setCurrentUser(response.data.data);
+    } catch (error) {
+      console.log("User not fetched", error);
+    }
+  };
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -90,6 +104,10 @@ const CreatePost = () => {
       setMessage(error.response?.data?.message || "Something went wrong");
     }
   };
+
+  useEffect(() => {
+    fetchUser()
+  },[])
 
   return (
     <div className="max-w-2xl mx-auto bg-white dark:bg-gray-800 shadow rounded-lg p-4 mt-6">
@@ -140,12 +158,18 @@ const CreatePost = () => {
             </p>
           )}
         </form>
-        {/* <button
-              className="bg-red-600 hover:bg-red-700 disabled:opacity-50 text-white px-4 py-2 rounded-full font-semibold transition"
-            >
-              Your Tweets
-            </button> */}
+       
       </div>
+       {/* Your Tweets Button */}
+{currentUser && (
+  <button
+    onClick={() => navigate(`/tweets/${currentUser._id}`)}
+    className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-full font-semibold transition mt-4"
+  >
+    Your Tweets
+  </button>
+)}
+
     </div>
   );
 };
