@@ -82,8 +82,9 @@ const CreatePost = () => {
       const response = await api.get("users/current-user");
       console.log(response.data.data);
       setCurrentUser(response.data.data);
+      setMessage(response.data.message)
     } catch (error) {
-      console.log("User not fetched", error);
+      setMessage(error.response?.data?.message || "Something went wrong");
     }
   };
 

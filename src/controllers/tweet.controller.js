@@ -71,7 +71,8 @@ const getUserTweets = asyncHandler(async (req, res) => {
       throw new ApiError(400,"Invalid user id")
     }
 
-    const tweets = await Tweet.find({ owner: userId }).sort({ createdAt: -1 });
+    const tweets = await Tweet.find({ owner: userId }) .populate("owner", "username fullName avatar") // replace 'user' with your actual field name in Tweet schema
+    .sort({ createdAt: -1 }); // optional: latest tweets first
 
   return res
   .status(200)
