@@ -23,7 +23,9 @@ import PublishStatus from './pages/video/PublishStatus.jsx';
 import UploadVideo from './pages/video/UploadVideo.jsx';
 import CreatePost from './pages/tweet/CreateTweet.jsx';
 import AllTweets from './pages/tweet/AllTweets.jsx';
-
+import GetUserTweet from './pages/tweet/GetUserTweet.jsx';
+import UpdateTweet from './pages/tweet/UpdateTweet.jsx';
+import DeleteTweet from './pages/tweet/DeleteTweet.jsx';
 
 const router = createBrowserRouter([
   {
@@ -64,6 +66,8 @@ const router = createBrowserRouter([
         element:<CurrentUser />
       }
       ,
+
+
       //video routes
       {
         path:"videos",
@@ -90,15 +94,29 @@ const router = createBrowserRouter([
         element:<PublishStatus />
       },
 
+
       //tweet post community post
       {
         path:"tweets",
         element:<AllTweets />
       },
       {
+        path:"tweets/:id",
+        element:<GetUserTweet />
+      },
+      {
+         path:"tweets/update/:id",
+         element:<UpdateTweet />
+      },
+      {
+          path:"tweets/delete/:id",
+          element:<DeleteTweet />
+      },
+      {
         path:"tweet/create",
         element:<CreatePost />
-      }
+      },
+      
 
     ]
   }
