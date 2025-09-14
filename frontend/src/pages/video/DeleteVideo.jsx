@@ -9,8 +9,9 @@ const DeleteVideo = () => {
 
   const handleDelete = async () => {
     try {
-      const response = await api.delete(`/videos/delete/${id}`);
+      const response = await api.delete(`/videos/${id}`);
       setMessage(response.data.message || "Video deleted successfully!");
+      console.log(response.data)
       // Redirect after delete
       setTimeout(() => {
         navigate("/");
