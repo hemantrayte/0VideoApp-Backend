@@ -7,7 +7,7 @@ const UpdateTweet = () => {
 
   return (
     <div>
-      <input type='' />
+      <h1>update tweet</h1>
     </div>
   )
 }
