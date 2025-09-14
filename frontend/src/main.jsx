@@ -22,6 +22,7 @@ import DeleteVideo from './pages/video/DeleteVideo.jsx';
 import PublishStatus from './pages/video/PublishStatus.jsx';
 import UploadVideo from './pages/video/UploadVideo.jsx';
 import CreatePost from './pages/tweet/CreateTweet.jsx';
+import AllTweets from './pages/tweet/AllTweets.jsx';
 
 
 const router = createBrowserRouter([
@@ -90,6 +91,10 @@ const router = createBrowserRouter([
       },
 
       //tweet post community post
+      {
+        path:"tweets",
+        element:<AllTweets />
+      },
       {
         path:"tweet/create",
         element:<CreatePost />

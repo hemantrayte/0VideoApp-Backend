@@ -60,7 +60,7 @@ const Header = () => {
           <Video className="h-6 w-6 text-gray-700 dark:text-gray-200" />
         </Link>
         <Link
-          to="/notifications"
+          to="/tweets"
           className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 relative"
         >
           <ChartBar className="h-6 w-6 text-gray-700 dark:text-gray-200" />
