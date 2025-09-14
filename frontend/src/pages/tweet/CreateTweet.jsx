@@ -67,10 +67,13 @@
 
 import React, { useState } from "react";
 import api from "../../Api/api";
+import { useNavigate } from "react-router-dom";
 
 const CreatePost = () => {
   const [post, setPost] = useState("");
   const [message, setMessage] = useState("");
+
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -82,6 +85,7 @@ const CreatePost = () => {
       );
       setMessage(response.data.message);
       setPost(""); // clear input
+      navigate("/tweets")
     } catch (error) {
       setMessage(error.response?.data?.message || "Something went wrong");
     }

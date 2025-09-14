@@ -31,19 +31,37 @@ const createTweet = asyncHandler(async (req, res) => {
     );
 })
 
-const allTweets = asyncHandler(async(req, res) => {
+// const allTweets = asyncHandler(async(req, res) => {
+//   const userId = req.user?._id;
+
+//   if(!userId) {
+//     throw new ApiError(404, "user Id is required")
+//   }
+
+//   const tweet = await Tweet.find({})
+
+//   return res.status(201).json(
+//     new ApiResponse(201, tweet, "Tweet Fetched successfully")
+//   );
+// })
+
+const allTweets = asyncHandler(async (req, res) => {
   const userId = req.user?._id;
 
-  if(!userId) {
-    throw new ApiError(404, "user Id is required")
+  if (!userId) {
+    throw new ApiError(404, "User ID is required");
   }
 
-  const tweet = await Tweet.find({})
+  // Fetch all tweets and populate the 'user' field with selected info
+  const tweets = await Tweet.find({})
+    .populate("owner", "username fullName avatar") // replace 'user' with your actual field name in Tweet schema
+    .sort({ createdAt: -1 }); // optional: latest tweets first
 
-  return res.status(201).json(
-    new ApiResponse(201, tweet, "Tweet Fetched successfully")
+  return res.status(200).json(
+    new ApiResponse(200, tweets, "Tweets fetched successfully")
   );
-})
+});
+
 
 const getUserTweets = asyncHandler(async (req, res) => {
     // TODO: get user tweets
