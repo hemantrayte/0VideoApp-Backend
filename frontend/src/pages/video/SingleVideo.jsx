@@ -4,6 +4,7 @@ import api from "../../Api/api";
 import AllComemnts from "../comments/AllComemnts";
 
 
+
 const SingleVideo = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -23,14 +24,15 @@ const SingleVideo = () => {
       setLikes(response.data.data.likesCount || 0);
       setComments(response.data.data.comments || []);
     } catch (error) {
-      console.log(error.response?.data?.message || error.message);
+      console.log(error.response.data|| error.message);
     }
   };
 
   const fetchCurrentUser = async () => {
     try {
       const res = await api.get("/users/current-user");
-      setCurrentUser(res.data.data);
+      setCurrentUser(res.data);
+      console.log(res.data)
     } catch (error) {
       console.log("Could not fetch current user", error);
     }
@@ -38,10 +40,11 @@ const SingleVideo = () => {
 
   const handleLike = async () => {
     try {
-      await api.post(`/videos/${id}/like`);
+     const response = await api.post(`/likes/toggle/v/${id}`);
       setLikes((prev) => prev + 1);
+      console.log(response.data)
     } catch (error) {
-      console.log("Error liking video", error);
+      console.log("Error liking video", error.response);
     }
   };
 

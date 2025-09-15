@@ -82,7 +82,9 @@ const AllComemnts = ({id, refresh}) => {
           // </div>
             ))
           }
-        </div>: <h1>Loading the Commemnts</h1>
+        </div>: <h1>Loading the Commemnts
+          <h1>{message}</h1>
+        </h1>
       }
     </div>
   )
