@@ -1,0 +1,91 @@
+import React, { useEffect, useState } from 'react'
+import api from '../../Api/api';
+import { Heading1 } from 'lucide-react';
+
+const AllComemnts = ({id, refresh}) => {
+
+   const [message, setMessage] = useState("");
+   const [comments, setComments] = useState([])
+   
+
+  const Allcomments = async() => {
+    try {
+      const response = await api.get(`/comments/${id}`)
+      console.log(response.data.data.comments)
+      setComments(response.data.data.comments)
+    } catch (error) {
+      setMessage(
+        error.response?.data?.message || "Something went wrong. Please try again"
+      );
+    }
+  }
+
+
+  const handleLike = async(id) => {
+    try {
+      const response = await api.post(`/likes/toggle/c/${id}`)
+      console.log(response.data)
+    } catch (error) {
+      console.log(error.response.data)
+      setMessage(error.response.data.message)
+    }
+  }
+
+  useEffect(() => {
+    Allcomments()
+  }, [id, refresh])
+
+  return (
+    <div>
+      {
+        comments ? <div>
+          {
+            comments.map((comment) => (
+              <div className="flex items-start space-x-3 p-3 border-b dark:border-gray-700">
+  {/* Avatar */}
+  <img
+    src={comment.owner.avatar}
+    alt={comment.owner.username}
+    className="w-10 h-10 rounded-full object-cover"
+  />
+
+  {/* Comment Content */}
+  <div className="flex-1">
+    {/* Username + Date on same row */}
+    <div className="flex items-center space-x-2">
+      <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
+        {comment.owner.username}
+      </h3>
+      <span className="text-xs text-gray-500">
+        {new Date(comment.createdAt).toLocaleDateString()}
+      </span>
+    </div>
+
+    {/* Comment text */}
+    <p className="text-gray-700 dark:text-gray-300 mt-1">
+      {comment.content}
+    </p>
+
+    {/* Actions */}
+    <div className="flex space-x-4 mt-2 text-sm">
+      <button
+        onClick={() => handleLike(comment._id)}
+        className="text-blue-600 hover:underline"
+      >
+        👍 Like {comment.likesCount > 0 && `(${comment.likesCount})`}
+      </button>
+      <button className="text-gray-600 hover:underline">Reply</button>
+    </div>
+  </div>
+</div>
+
+          // </div>
+            ))
+          }
+        </div>: <h1>Loading the Commemnts</h1>
+      }
+    </div>
+  )
+}
+
+export default AllComemnts

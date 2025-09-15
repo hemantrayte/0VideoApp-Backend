@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../../Api/api";
+import AllComemnts from "../comments/AllComemnts";
+
 
 const SingleVideo = () => {
   const { id } = useParams();
@@ -8,12 +10,18 @@ const SingleVideo = () => {
 
   const [video, setVideo] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
+  const [likes, setLikes] = useState(0);
+  const [comments, setComments] = useState([]);
+  const [newComment, setNewComment] = useState("");
+   const [refreshComments, setRefreshComments] = useState(false);
+  
 
   const fetchSingleVideo = async () => {
     try {
       const response = await api.get(`/videos/${id}`);
       setVideo(response.data.data);
-      console.log(response.data.data)
+      setLikes(response.data.data.likesCount || 0);
+      setComments(response.data.data.comments || []);
     } catch (error) {
       console.log(error.response?.data?.message || error.message);
     }
@@ -21,10 +29,38 @@ const SingleVideo = () => {
 
   const fetchCurrentUser = async () => {
     try {
-      const res = await api.get("/users/current-user"); // make sure you have this API
+      const res = await api.get("/users/current-user");
       setCurrentUser(res.data.data);
     } catch (error) {
       console.log("Could not fetch current user", error);
+    }
+  };
+
+  const handleLike = async () => {
+    try {
+      await api.post(`/videos/${id}/like`);
+      setLikes((prev) => prev + 1);
+    } catch (error) {
+      console.log("Error liking video", error);
+    }
+  };
+
+  const handleCommentSubmit = async (e) => {
+    e.preventDefault();
+    if (!newComment.trim()) return;
+
+    try {
+      const res = await api.post(`/comments/${id}`, {
+        content: newComment,
+      },
+    {
+      headers: { "Content-Type": "application/json" },
+    });
+      setNewComment("");
+      console.log(res.data.data)
+      setRefreshComments(prev => !prev);
+    } catch (error) {
+      console.log("Error posting comment", error);
     }
   };
 
@@ -83,7 +119,6 @@ const SingleVideo = () => {
             </div>
           </div>
 
-
           <div className="flex items-center space-x-3">
             {isOwner ? (
               <button
@@ -100,15 +135,57 @@ const SingleVideo = () => {
           </div>
         </div>
 
+        {/* Like Button */}
+        <div className="flex items-center space-x-3 mt-4">
+          <button
+            onClick={handleLike}
+            className="bg-blue-600 text-white px-4 py-2 rounded-full font-semibold hover:bg-blue-700 transition"
+          >
+            👍 Like {likes > 0 && <span>({likes})</span>}
+          </button>
+        </div>
+
         {/* Description */}
         <div className="mt-4 bg-gray-100 dark:bg-gray-800 p-4 rounded-lg">
           <p className="text-gray-800 dark:text-gray-200">
             {video.description}
           </p>
         </div>
+
+        {/* Comments Section */}
+        <div className="mt-6">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+            Comments
+          </h3>
+
+          {/* Comment Form */}
+          <form onSubmit={handleCommentSubmit} className="mb-4 flex space-x-2">
+            <input
+              type="text"
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+              placeholder="Add a comment..."
+              className="flex-1 p-2 border rounded-lg dark:bg-gray-900 dark:text-white"
+            />
+            <button
+              type="submit"
+              className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
+            >
+              Post
+            </button>
+          </form>
+
+          {/* Comment List */}
+          <div className="space-y-3">
+           <AllComemnts 
+           id={video._id}
+           refresh={refreshComments} 
+            />
+          </div>
+        </div>
       </div>
 
-      {/* Right: Suggested videos (Placeholder) */}
+      {/* Right: Suggested videos */}
       <div className="w-full lg:w-80">
         <h2 className="text-lg font-semibold mb-3 text-gray-800 dark:text-gray-100">
           Suggested Videos
