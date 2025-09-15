@@ -27,6 +27,7 @@ import GetUserTweet from './pages/tweet/GetUserTweet.jsx';
 import UpdateTweet from './pages/tweet/UpdateTweet.jsx';
 import DeleteTweet from './pages/tweet/DeleteTweet.jsx';
 import ChannelProfile from './pages/user/ChannelProfile.jsx';
+import UpdateComment from './pages/comments/UpdateComment.jsx';
 
 const router = createBrowserRouter([
   {
@@ -124,6 +125,11 @@ const router = createBrowserRouter([
         element:<CreatePost />
       },
       
+      //comments
+      {
+        path:"comments/update/:id",
+        element:<UpdateComment />
+      }
 
     ]
   }
