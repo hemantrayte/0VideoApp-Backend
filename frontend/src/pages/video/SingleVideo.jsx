@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../../Api/api";
 import AllComemnts from "../comments/AllComemnts";
+import AddCommentVideo from "../comments/AddCommentVideo";
 
 
 
@@ -13,7 +14,6 @@ const SingleVideo = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [likes, setLikes] = useState(0);
   const [comments, setComments] = useState([]);
-  const [newComment, setNewComment] = useState("");
    const [refreshComments, setRefreshComments] = useState(false);
   
 
@@ -38,7 +38,7 @@ const SingleVideo = () => {
     }
   };
 
-  
+
   const handleLike = async () => {
     try {
      const response = await api.post(`/likes/toggle/v/${id}`);
@@ -49,24 +49,6 @@ const SingleVideo = () => {
     }
   };
 
-  const handleCommentSubmit = async (e) => {
-    e.preventDefault();
-    if (!newComment.trim()) return;
-
-    try {
-      const res = await api.post(`/comments/${id}`, {
-        content: newComment,
-      },
-    {
-      headers: { "Content-Type": "application/json" },
-    });
-      setNewComment("");
-      console.log(res.data.data)
-      setRefreshComments(prev => !prev);
-    } catch (error) {
-      console.log("Error posting comment", error);
-    }
-  };
 
   useEffect(() => {
     fetchSingleVideo();
@@ -161,24 +143,14 @@ const SingleVideo = () => {
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
             Comments
           </h3>
+          
+          {/* add comments */}
+          <AddCommentVideo 
+          id={video._id}
+          onCommentAdded={() => setRefreshComments(prev => !prev)} 
+           />
 
-          {/* Comment Form */}
-          <form onSubmit={handleCommentSubmit} className="mb-4 flex space-x-2">
-            <input
-              type="text"
-              value={newComment}
-              onChange={(e) => setNewComment(e.target.value)}
-              placeholder="Add a comment..."
-              className="flex-1 p-2 border rounded-lg dark:bg-gray-900 dark:text-white"
-            />
-            <button
-              type="submit"
-              className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
-            >
-              Post
-            </button>
-          </form>
-
+  
           {/* Comment List */}
           <div className="space-y-3">
            <AllComemnts 
