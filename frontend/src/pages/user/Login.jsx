@@ -40,7 +40,7 @@ const Login = () => {
       navigate("/");
     } catch (error) {
       setMessage(
-        error.response?.data?.message || "Something went wrong. Please try again."
+        error.response?.data?.message || "Something went wrong. Please try again"
       );
     }
   };

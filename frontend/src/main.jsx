@@ -26,6 +26,7 @@ import AllTweets from './pages/tweet/AllTweets.jsx';
 import GetUserTweet from './pages/tweet/GetUserTweet.jsx';
 import UpdateTweet from './pages/tweet/UpdateTweet.jsx';
 import DeleteTweet from './pages/tweet/DeleteTweet.jsx';
+import ChannelProfile from './pages/user/ChannelProfile.jsx';
 
 const router = createBrowserRouter([
   {
@@ -92,6 +93,12 @@ const router = createBrowserRouter([
       {
         path:"videos/status/:id",
         element:<PublishStatus />
+      },
+
+      //chenneal
+      {
+        path:"channel/profile/:username",
+        element:<ChannelProfile />
       },
 
 

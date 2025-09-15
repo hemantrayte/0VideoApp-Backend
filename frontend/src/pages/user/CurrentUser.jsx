@@ -76,6 +76,13 @@ const CurrentUser = () => {
           >
             Update Profile
           </button>
+          <br />
+          <button
+            onClick={() => navigate(`/channel/profile/${currentUser.username}`)}
+            className="mt-6 px-6 py-2 bg-red-600 text-white font-semibold rounded-full hover:bg-red-700 shadow transition duration-200"
+          >
+            Channel Profile
+          </button>
         </div>
       </div>
     </div>
