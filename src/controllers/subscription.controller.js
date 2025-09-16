@@ -8,7 +8,7 @@ import { channel, subscribe } from "diagnostics_channel"
 
 
 const toggleSubscription = asyncHandler(async (req, res) => {
-    const {channelId} = req.params
+    const {id:channelId} = req.params
     const userId = req.user?._id;
     // TODO: toggle subscription
 
@@ -77,7 +77,7 @@ const getUserChannelSubscribers = asyncHandler(async (req, res) => {
 
 // controller to return channel list to which user has subscribed
 const getSubscribedChannels = asyncHandler(async (req, res) => {
-  const { subscriberId } = req.params;
+  const { id:subscriberId } = req.params;
 
   if (!subscriberId) {
     throw new ApiError(400, "Subscriber ID is required");
