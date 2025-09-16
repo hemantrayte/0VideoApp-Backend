@@ -28,6 +28,7 @@ import UpdateTweet from './pages/tweet/UpdateTweet.jsx';
 import DeleteTweet from './pages/tweet/DeleteTweet.jsx';
 import ChannelProfile from './pages/user/ChannelProfile.jsx';
 import UpdateComment from './pages/comments/UpdateComment.jsx';
+import ChannelStats from './pages/dashboard-c/ChannelStats.jsx';
 
 const router = createBrowserRouter([
   {
@@ -101,7 +102,11 @@ const router = createBrowserRouter([
         path:"channel/profile/:username",
         element:<ChannelProfile />
       },
-
+    
+      {
+        path:"channel/stats/:id",
+        element:<ChannelStats />
+      },
 
       //tweet post community post
       {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import api from "../../Api/api";
 
 const ChannelProfile = () => {
@@ -16,6 +16,8 @@ const ChannelProfile = () => {
       setMessage(error.response?.data?.message || "Failed to fetch channel");
     }
   };
+
+  
 
   useEffect(() => {
     fetchChannelProfile();
@@ -64,7 +66,7 @@ const ChannelProfile = () => {
               <li className="hover:text-white cursor-pointer">Videos</li>
               <li className="hover:text-white cursor-pointer">Playlists</li>
               <li className="hover:text-white cursor-pointer">Community</li>
-              <li className="hover:text-white cursor-pointer">About</li>
+              <Link to={`/channel/stats/${data._id}`} className="hover:text-white cursor-pointer">channel Stats</Link>
             </ul>
           </div>
         </div>

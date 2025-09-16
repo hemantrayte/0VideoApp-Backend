@@ -7,11 +7,13 @@ import {ApiResponse} from "../utils/ApiResponse.js"
 import {asyncHandler} from "../utils/asyncHandler.js"
 
 const getChannelStats = asyncHandler(async (req, res) => {
-  const { channelId } = req.params;
+  const { id:channelId } = req.params;
+  console.log(req.params)
 
   if (!channelId) {
     throw new ApiError(400, "Channel ID is required");
   }
+
 
   // 1. Total videos & total views
   const videoStats = await Video.aggregate([
