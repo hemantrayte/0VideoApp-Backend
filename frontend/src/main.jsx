@@ -30,6 +30,9 @@ import ChannelProfile from './pages/user/ChannelProfile.jsx';
 import UpdateComment from './pages/comments/UpdateComment.jsx';
 import ChannelStats from './pages/dashboard-c/ChannelStats.jsx';
 import ChannelVideos from './pages/dashboard-c/ChannelVideos.jsx';
+import CreatePlaylist from './pages/playlist/CreatePlaylist.jsx';
+import DeletePlaylist from './pages/playlist/DeletePlaylist.jsx';
+import PlaylistById from './pages/playlist/PlaylistById.jsx';
 
 const router = createBrowserRouter([
   {
@@ -140,6 +143,20 @@ const router = createBrowserRouter([
       {
         path:"comments/update/:id",
         element:<UpdateComment />
+      },
+
+      //playlist
+      {
+        path:"playlist/create",
+        element:<CreatePlaylist />
+      },
+      {
+        path:"playlist/delete/:id",
+        element:<DeletePlaylist />
+      },
+      {
+        path:"playlist/:id",
+        element:<PlaylistById />
       }
 
     ]
