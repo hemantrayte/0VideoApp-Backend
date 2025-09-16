@@ -34,6 +34,7 @@ import CreatePlaylist from './pages/playlist/CreatePlaylist.jsx';
 import DeletePlaylist from './pages/playlist/DeletePlaylist.jsx';
 import PlaylistById from './pages/playlist/PlaylistById.jsx';
 import UpdatePlaylist from './pages/playlist/UpdatePlaylist.jsx'
+import UsersPlaylist from './pages/playlist/UsersPlaylist.jsx'
 
 const router = createBrowserRouter([
   {
@@ -162,6 +163,10 @@ const router = createBrowserRouter([
       {
         path:"playlist/update/:id",
         element:<UpdatePlaylist />
+      },
+      {
+        path:"playlist/user/:id",
+        element:<UsersPlaylist />
       }
 
     ]
