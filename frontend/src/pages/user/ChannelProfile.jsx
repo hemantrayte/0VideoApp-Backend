@@ -7,6 +7,19 @@ const ChannelProfile = () => {
   const [data, setData] = useState(null);
   const { username } = useParams();
 
+  const [currentUser, setCurrentUser] = useState(null);
+
+  const fetchUser = async () => {
+    try {
+      const response = await api.get("users/current-user");
+      console.log(response.data.data);
+      setCurrentUser(response.data.data);
+    } catch (error) {
+      console.log("User not fetched", error);
+    }
+  };
+
+
   const fetchChannelProfile = async () => {
     try {
       const response = await api.get(`/users/c/${username}`);
@@ -17,10 +30,13 @@ const ChannelProfile = () => {
     }
   };
 
-  
+
+
+
 
   useEffect(() => {
     fetchChannelProfile();
+    fetchUser()
   }, []);
 
   return (
@@ -29,7 +45,7 @@ const ChannelProfile = () => {
       {message && !data && (
         <p className="text-center text-red-500 py-4">{message}</p>
       )}
-  
+
       {data ? (
         <div>
           {/* Cover Image */}
@@ -40,7 +56,7 @@ const ChannelProfile = () => {
               className="w-full h-full object-cover"
             />
           </div>
-  
+
           {/* Avatar + Info */}
           <div className="flex items-center px-6 -mt-12">
             <img
@@ -58,15 +74,30 @@ const ChannelProfile = () => {
               </div>
             </div>
           </div>
-  
+
           {/* Tabs */}
           <div className="mt-6 border-b border-gray-700 px-6">
             <ul className="flex space-x-6 text-gray-400 text-sm">
               <li className="hover:text-white cursor-pointer">Home</li>
               <li className="hover:text-white cursor-pointer">Videos</li>
               <li className="hover:text-white cursor-pointer">Playlists</li>
-              <Link to={`/channel/videos/${data._id}`} className="hover:text-white cursor-pointer">Channel Videos</Link>
-              <Link to={`/channel/stats/${data._id}`} className="hover:text-white cursor-pointer">channel Stats</Link>
+              {currentUser._id === data._id && (
+                <>
+                  <Link
+                    to={`/channel/videos/${data._id}`}
+                    className="hover:text-white cursor-pointer"
+                  >
+                    Channel Videos
+                  </Link>
+                  <Link
+                    to={`/channel/stats/${data._id}`}
+                    className="hover:text-white cursor-pointer"
+                  >
+                    Channel Stats
+                  </Link>
+                </>
+              )}
+
             </ul>
           </div>
         </div>
@@ -77,7 +108,7 @@ const ChannelProfile = () => {
       )}
     </div>
   );
-  
+
 
   // return (
   //   <div className="max-w-5xl mx-auto bg-black min-h-screen text-white">
