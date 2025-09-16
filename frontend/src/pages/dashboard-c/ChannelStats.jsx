@@ -1,10 +1,12 @@
 import React from 'react'
 
+
 const ChannelStats = () => {
+
+
+
   return (
-    <div>
-      
-    </div>
+  <h1>channel data</h1>
   )
 }
 
