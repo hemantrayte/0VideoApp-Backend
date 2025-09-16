@@ -65,7 +65,7 @@ const ChannelProfile = () => {
               <li className="hover:text-white cursor-pointer">Home</li>
               <li className="hover:text-white cursor-pointer">Videos</li>
               <li className="hover:text-white cursor-pointer">Playlists</li>
-              <li className="hover:text-white cursor-pointer">Community</li>
+              <Link to={`/channel/videos/${data._id}`} className="hover:text-white cursor-pointer">Channel Videos</Link>
               <Link to={`/channel/stats/${data._id}`} className="hover:text-white cursor-pointer">channel Stats</Link>
             </ul>
           </div>

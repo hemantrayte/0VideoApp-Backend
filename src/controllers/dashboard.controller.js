@@ -55,7 +55,7 @@ const getChannelStats = asyncHandler(async (req, res) => {
 
 
 const getChannelVideos = asyncHandler(async (req, res) => {
-  const { channelId } = req.params;
+  const { id:channelId } = req.params;
 
   if (!channelId) {
     throw new ApiError(400, "Channel ID is required");
