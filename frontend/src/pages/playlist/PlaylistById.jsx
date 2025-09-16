@@ -5,12 +5,12 @@ import { useParams } from "react-router-dom";
 const PlaylistById = () => {
   const [playList, setPlaylist] = useState(null);
   const [videos, setVideos] = useState([]);
+  const [playingVideoId, setPlayingVideoId] = useState(null); // track which video is playing
   const { id } = useParams();
 
   const playListById = async () => {
     try {
       const response = await api.get(`/playlist/${id}`);
-      console.log(response.data.data);
       setPlaylist(response.data.data);
       setVideos(response.data.data.videos);
     } catch (error) {
@@ -45,35 +45,43 @@ const PlaylistById = () => {
                 key={video._id}
                 className="bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-lg transition overflow-hidden"
               >
-                {/* Thumbnail */}
+                {/* Thumbnail OR Video */}
                 <div className="relative">
-                  <img
-                    src={video.thumbnail}
-                    alt={video.title}
-                    className="w-full h-40 object-cover"
-                  />
-                  <span className="absolute bottom-2 right-2 bg-black bg-opacity-75 text-white text-xs px-2 py-1 rounded">
-                    {video.duration || "0:00"}
-                  </span>
+                  {playingVideoId === video._id ? (
+                    <video
+                      controls
+                      autoPlay
+                      className="w-full h-40 object-cover"
+                      src={video.videoFile}
+                    />
+                  ) : (
+                    <img
+                      src={video.thumbnail}
+                      alt={video.title}
+                      className="w-full h-40 object-cover cursor-pointer"
+                      onClick={() => setPlayingVideoId(video._id)}
+                    />
+                  )}
+
+                  {/* Duration (only on thumbnail) */}
+                  {playingVideoId !== video._id && (
+                    <span className="absolute bottom-2 right-2 bg-black bg-opacity-75 text-white text-xs px-2 py-1 rounded">
+                      {video.duration || "0:00"}
+                    </span>
+                  )}
                 </div>
 
                 {/* Video Info */}
                 <div className="p-4">
-                  <h3 className="font-semibold text-base line-clamp-2 hover:text-red-500 cursor-pointer">
+                  <h3
+                    className="font-semibold text-base line-clamp-2 hover:text-red-500 cursor-pointer"
+                    onClick={() => setPlayingVideoId(video._id)}
+                  >
                     {video.title}
                   </h3>
                   <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-2 mt-1">
                     {video.description}
                   </p>
-
-                  {/* Video player preview */}
-                  <div className="mt-3">
-                    <video
-                      controls
-                      className="w-full rounded-lg"
-                      src={video.videoFile}
-                    />
-                  </div>
                 </div>
               </div>
             ))}
