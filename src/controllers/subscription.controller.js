@@ -8,7 +8,7 @@ import { channel, subscribe } from "diagnostics_channel"
 
 
 const toggleSubscription = asyncHandler(async (req, res) => {
-    const {id:channelId} = req.params
+    const {channelId} = req.params
     const userId = req.user?._id;
     // TODO: toggle subscription
 
