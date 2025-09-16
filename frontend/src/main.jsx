@@ -33,6 +33,7 @@ import ChannelVideos from './pages/dashboard-c/ChannelVideos.jsx';
 import CreatePlaylist from './pages/playlist/CreatePlaylist.jsx';
 import DeletePlaylist from './pages/playlist/DeletePlaylist.jsx';
 import PlaylistById from './pages/playlist/PlaylistById.jsx';
+import UpdatePlaylist from './pages/playlist/UpdatePlaylist.jsx'
 
 const router = createBrowserRouter([
   {
@@ -157,6 +158,10 @@ const router = createBrowserRouter([
       {
         path:"playlist/:id",
         element:<PlaylistById />
+      },
+      {
+        path:"playlist/update/:id",
+        element:<UpdatePlaylist />
       }
 
     ]

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import api from "../../Api/api";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const PlaylistById = () => {
   const [playList, setPlaylist] = useState(null);
   const [videos, setVideos] = useState([]);
   const [playingVideoId, setPlayingVideoId] = useState(null); // track which video is playing
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const playListById = async () => {
     try {
@@ -17,6 +18,10 @@ const PlaylistById = () => {
       console.log(error.response);
     }
   };
+
+  const handleClick = () => {
+    navigate(`/playlist/update/${id}`)
+  }
 
   useEffect(() => {
     playListById();
@@ -83,7 +88,12 @@ const PlaylistById = () => {
                     {video.description}
                   </p>
                 </div>
+                <button
+                onClick={handleClick}
+                  className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition"
+                >Update Playlist</button>
               </div>
+              
             ))}
           </div>
         </div>
