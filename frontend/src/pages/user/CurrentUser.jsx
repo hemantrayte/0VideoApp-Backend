@@ -83,6 +83,13 @@ const CurrentUser = () => {
           >
             Channel Profile
           </button>
+          <br />
+          <button
+            onClick={() => navigate(`/playlist/user/${currentUser._id}`)}
+            className="mt-6 px-6 py-2 bg-red-600 text-white font-semibold rounded-full hover:bg-red-700 shadow transition duration-200"
+          >
+            User  Playlist
+          </button>
         </div>
       </div>
     </div>
