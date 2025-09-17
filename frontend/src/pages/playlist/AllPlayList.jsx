@@ -23,10 +23,20 @@ const AllPlayList = () => {
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-6">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
-          All Playlists
-        </h1>
+        {/* Header Section */}
+        <div className="flex items-center justify-between mb-6">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+            All Playlists
+          </h1>
+          <button
+            onClick={() => navigate("/playlist/create")}
+            className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium shadow-md transition"
+          >
+            + Create Playlist
+          </button>
+        </div>
 
+        {/* Playlist Grid */}
         {data.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {data.map((playlist) => (
@@ -35,7 +45,7 @@ const AllPlayList = () => {
                 className="bg-white dark:bg-gray-800 rounded-xl shadow hover:shadow-lg transition cursor-pointer overflow-hidden"
                 onClick={() => navigate(`/playlist/${playlist._id}`)}
               >
-                {/* Playlist Thumbnail (You can set first video’s thumbnail or placeholder) */}
+                {/* Playlist Thumbnail */}
                 <div className="relative">
                   <img
                     src={

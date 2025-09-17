@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import api from "../../Api/api";
+import { useNavigate } from "react-router-dom";
 
 const CreatePlaylist = () => {
   const [message, setMessage] = useState("");
@@ -9,6 +10,8 @@ const CreatePlaylist = () => {
     name: "",
     description: "",
   });
+
+  const navigate = useNavigate()
 
   const handleInputChange = (e) => {
     setPlayList({
@@ -21,7 +24,7 @@ const CreatePlaylist = () => {
     e.preventDefault();
     setMessage("");
     setStatus("");
-
+   
     try {
       const response = await api.post("/playlist", playList, {
         headers: { "Content-Type": "application/json" },
@@ -32,6 +35,7 @@ const CreatePlaylist = () => {
 
       // reset inputs
       setPlayList({ name: "", description: "" });
+      navigate(-1)
     } catch (error) {
       setMessage(
         error.response?.data?.message || "Something went wrong. Please try again"
