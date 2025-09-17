@@ -126,8 +126,6 @@ const CreatePlaylist = () => {
         
           <button type="submit"
           className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition">Delete Playlist</button>
-        
-          Delete Playlist
         </Link>
       </form>
     </div>
