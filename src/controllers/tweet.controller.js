@@ -31,20 +31,6 @@ const createTweet = asyncHandler(async (req, res) => {
     );
 })
 
-// const allTweets = asyncHandler(async(req, res) => {
-//   const userId = req.user?._id;
-
-//   if(!userId) {
-//     throw new ApiError(404, "user Id is required")
-//   }
-
-//   const tweet = await Tweet.find({})
-
-//   return res.status(201).json(
-//     new ApiResponse(201, tweet, "Tweet Fetched successfully")
-//   );
-// })
-
 const allTweets = asyncHandler(async (req, res) => {
   const userId = req.user?._id;
 
