@@ -2,7 +2,6 @@
 // import fs from "fs";
 // import path from "path";
 
-
 // cloudinary.config({
 //   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
 //   api_key: process.env.CLOUDINARY_API_KEY,
@@ -13,7 +12,6 @@
 //   try {
 //     if (!localFilePath) return null;
 
-    
 // console.log("Cloudinary Config:", {
 //   name: process.env.CLOUDINARY_CLOUD_NAME,
 //   key: process.env.CLOUDINARY_API_KEY ? "✅ Loaded" : "❌ Missing",
