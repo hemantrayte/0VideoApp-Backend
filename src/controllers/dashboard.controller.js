@@ -1,19 +1,18 @@
-import mongoose from "mongoose"
-import {Video} from "../models/video.model.js"
-import {Subscription} from "../models/subscription.model.js"
-import {Like} from "../models/like.model.js"
-import {ApiError} from "../utils/ApiError.js"
-import {ApiResponse} from "../utils/ApiResponse.js"
-import {asyncHandler} from "../utils/asyncHandler.js"
+import mongoose from "mongoose";
+import { Video } from "../models/video.model.js";
+import { Subscription } from "../models/subscription.model.js";
+import { Like } from "../models/like.model.js";
+import { ApiError } from "../utils/ApiError.js";
+import { ApiResponse } from "../utils/ApiResponse.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
 
 const getChannelStats = asyncHandler(async (req, res) => {
-  const { id:channelId } = req.params;
-  console.log(req.params)
+  const { id: channelId } = req.params;
+  console.log(req.params);
 
   if (!channelId) {
     throw new ApiError(400, "Channel ID is required");
   }
-
 
   // 1. Total videos & total views
   const videoStats = await Video.aggregate([
@@ -53,9 +52,8 @@ const getChannelStats = asyncHandler(async (req, res) => {
   );
 });
 
-
 const getChannelVideos = asyncHandler(async (req, res) => {
-  const { id:channelId } = req.params;
+  const { id: channelId } = req.params;
 
   if (!channelId) {
     throw new ApiError(400, "Channel ID is required");
@@ -78,9 +76,4 @@ const getChannelVideos = asyncHandler(async (req, res) => {
   );
 });
 
-
-
-export {
-  getChannelStats,
-  getChannelVideos
-}
+export { getChannelStats, getChannelVideos };
