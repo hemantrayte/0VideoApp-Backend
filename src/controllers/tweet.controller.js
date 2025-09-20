@@ -84,20 +84,17 @@ const updateTweet = asyncHandler(async (req, res) => {
       throw new ApiError(400, "Tweet ID is required");
     }
 
-    const tweet = await Tweet.findById(tweetId)
 
+    const tweet = await Tweet.findOneAndUpdate(
+      { _id: tweetId, owner: userId },
+      { $set: {content}  },
+      { new: true } // return updated tweet
+    );
+  
     if(!tweet) {
       throw new ApiError(404, "Comment not found");
     }
 
-    if (tweet.owner.toString() !== userId.toString()) {
-      throw new ApiError(403, "You are not allowed to update this tweet");
-    }
-
-
-    tweet.content =content
-
-    await tweet.save();
 
     return res
       .status(200)
