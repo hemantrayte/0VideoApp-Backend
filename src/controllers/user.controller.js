@@ -96,12 +96,6 @@ const registerUser = asyncHandler(async (req, res) => {
     username: username.toLowerCase(),
   });
 
-  // generate access and refresh token
-  // const accessToken = user.generateAccessToken();
-  // const refreshToken = user.generateRefreshToken();
-  // user.refreshToken = refreshToken;
-  // await user.save({ validateBeforeSave: false });
-
   //step 7 -remove password and refresh token file from responcen
   const createUser = await User.findById(user._id).select(
     "-password -refreshToken"
