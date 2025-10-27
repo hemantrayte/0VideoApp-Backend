@@ -1,13 +1,11 @@
 // import React, { useEffect, useState } from 'react'
 // import api from '../../Api/api';
 
-
 // const AllComemnts = ({id, refresh}) => {
 
 //    const [message, setMessage] = useState("");
 //    const [comments, setComments] = useState([])
 //     const [currentUser, setCurrentUser] = useState(null);
-
 
 //    const fetchCurrentUser = async () => {
 //     try {
@@ -18,8 +16,6 @@
 //       console.log("Could not fetch current user", error);
 //     }
 //   };
- 
-   
 
 //   const Allcomments = async() => {
 //     try {
@@ -32,7 +28,6 @@
 //       );
 //     }
 //   }
-
 
 //   const handleLike = async(id) => {
 //     try {
@@ -106,17 +101,16 @@
 
 // export default AllComemnts
 
-
-import React, { useEffect, useState } from 'react'
-import api from '../../Api/api';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import api from "../../Api/api";
+import { useNavigate } from "react-router-dom";
 
 const AllComemnts = ({ id, refresh }) => {
   const [message, setMessage] = useState("");
   const [comments, setComments] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const fetchCurrentUser = async () => {
     try {
@@ -133,7 +127,8 @@ const AllComemnts = ({ id, refresh }) => {
       setComments(response.data.data.comments);
     } catch (error) {
       setMessage(
-        error.response?.data?.message || "Something went wrong. Please try again"
+        error.response?.data?.message ||
+          "Something went wrong. Please try again"
       );
     }
   };
@@ -202,15 +197,20 @@ const AllComemnts = ({ id, refresh }) => {
                     onClick={() => handleLike(comment._id)}
                     className="text-blue-600 hover:underline"
                   >
-                    👍 Like {comment.likesCount > 0 && `(${comment.likesCount})`}
+                    👍 Like{" "}
+                    {comment.likesCount > 0 && `(${comment.likesCount})`}
                   </button>
-                  <button className="text-gray-600 hover:underline">Reply</button>
+                  <button className="text-gray-600 hover:underline">
+                    Reply
+                  </button>
 
                   {/* ✅ Only show Update/Delete if current user is owner */}
                   {currentUser?._id === comment.owner._id && (
                     <>
                       <button
-                        onClick={() => navigate(`/comments/update/${comment._id}`)}
+                        onClick={() =>
+                          navigate(`/comments/update/${comment._id}`)
+                        }
                         className="text-yellow-600 hover:underline"
                       >
                         Update
