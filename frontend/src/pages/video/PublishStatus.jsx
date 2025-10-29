@@ -7,7 +7,7 @@ const PublishStatus = () => {
   const [isPublished, setIsPublished] = useState(null); // track publish status
   const { id } = useParams();
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   // fetch current video status
   const fetchStatus = async () => {
@@ -15,7 +15,9 @@ const PublishStatus = () => {
       const response = await api.get(`/videos/${id}`);
       setIsPublished(response.data.data.isPublished);
     } catch (error) {
-      setMessage(error.response?.data?.message || "Failed to fetch video status");
+      setMessage(
+        error.response?.data?.message || "Failed to fetch video status"
+      );
     }
   };
 
@@ -44,8 +46,8 @@ const PublishStatus = () => {
         {isPublished === null
           ? "Loading video status..."
           : isPublished
-          ? "This video is currently Public"
-          : "This video is currently Private"}
+            ? "This video is currently Public"
+            : "This video is currently Private"}
       </h1>
 
       <button
@@ -59,9 +61,7 @@ const PublishStatus = () => {
         {isPublished ? "Make Private" : "Make Public"}
       </button>
 
-      {message && (
-        <p className="mt-4 text-sm text-gray-300">{message}</p>
-      )}
+      {message && <p className="mt-4 text-sm text-gray-300">{message}</p>}
     </div>
   );
 };

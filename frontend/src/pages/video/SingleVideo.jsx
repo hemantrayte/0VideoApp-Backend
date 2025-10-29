@@ -4,8 +4,6 @@ import api from "../../Api/api";
 import AllComemnts from "../comments/AllComemnts";
 import AddCommentVideo from "../comments/AddCommentVideo";
 
-
-
 const SingleVideo = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -14,8 +12,7 @@ const SingleVideo = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [likes, setLikes] = useState(0);
   const [comments, setComments] = useState([]);
-   const [refreshComments, setRefreshComments] = useState(false);
-  
+  const [refreshComments, setRefreshComments] = useState(false);
 
   const fetchSingleVideo = async () => {
     try {
@@ -24,7 +21,7 @@ const SingleVideo = () => {
       setLikes(response.data.data.likesCount || 0);
       setComments(response.data.data.comments || []);
     } catch (error) {
-      console.log(error.response.data|| error.message);
+      console.log(error.response.data || error.message);
     }
   };
 
@@ -32,23 +29,21 @@ const SingleVideo = () => {
     try {
       const res = await api.get("/users/current-user");
       setCurrentUser(res.data);
-      console.log(res.data)
+      console.log(res.data);
     } catch (error) {
       console.log("Could not fetch current user", error);
     }
   };
 
-
   const handleLike = async () => {
     try {
-     const response = await api.post(`/likes/toggle/v/${id}`);
+      const response = await api.post(`/likes/toggle/v/${id}`);
       setLikes((prev) => prev + 1);
-      console.log(response.data)
+      console.log(response.data);
     } catch (error) {
       console.log("Error liking video", error.response);
     }
   };
-
 
   useEffect(() => {
     fetchSingleVideo();
@@ -143,20 +138,16 @@ const SingleVideo = () => {
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
             Comments
           </h3>
-          
-          {/* add comments */}
-          <AddCommentVideo 
-          id={video._id}
-          onCommentAdded={() => setRefreshComments(prev => !prev)} 
-           />
 
-  
+          {/* add comments */}
+          <AddCommentVideo
+            id={video._id}
+            onCommentAdded={() => setRefreshComments((prev) => !prev)}
+          />
+
           {/* Comment List */}
           <div className="space-y-3">
-           <AllComemnts 
-           id={video._id}
-           refresh={refreshComments} 
-            />
+            <AllComemnts id={video._id} refresh={refreshComments} />
           </div>
         </div>
       </div>

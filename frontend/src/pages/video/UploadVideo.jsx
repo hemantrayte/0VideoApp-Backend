@@ -3,7 +3,7 @@
 // import { useNavigate } from 'react-router-dom'
 
 // const UploadVideo = () => {
-  
+
 //   const [data, setData] = useState({
 //     title:"",
 //     description:"",
@@ -30,8 +30,6 @@
 //     }
 //   }
 
-  
-
 //   const handleSubmit = async(e) => {
 //     e.preventDefault()
 //     const formData = new FormData()
@@ -55,14 +53,14 @@
 //   return (
 //     <div className='bg-black'>
 //      <form onSubmit={handleSubmit}>
-//         <input 
+//         <input
 //         className='bg-white'
 //         type='text'
 //         name='title'
 //         value={data.title}
 //         onChange={handleInputChange}
 //         />
-//         <input 
+//         <input
 //         className='bg-white'
 //         type='text'
 //         name='description'
@@ -70,7 +68,7 @@
 //         onChange={handleInputChange}
 //         />
 
-//       <input 
+//       <input
 //         className='bg-white'
 //         type='file'
 //         name='video'
@@ -78,10 +76,10 @@
 //         onChange={handleFileChange}
 //         />
 
-//         <input 
+//         <input
 //         className='bg-white'
-//         type="file" 
-//         name="thumbnail" 
+//         type="file"
+//         name="thumbnail"
 //         accept="image/*"
 //         onChange={handleFileChange} />
 //        <button className='bg-white' type='submit'>Upload Video</button>
@@ -90,51 +88,49 @@
 //   )
 // }
 
-
 // export default UploadVideo
 
-
-import React, { useState } from 'react'
-import api from '../../Api/api'
-import { useNavigate } from 'react-router-dom'
+import React, { useState } from "react";
+import api from "../../Api/api";
+import { useNavigate } from "react-router-dom";
 
 const UploadVideo = () => {
-  const [data, setData] = useState({ title: "", description: "" })
-  const [videoFile, setVideoFile] = useState(null)
-  const [thumbnail, setThumbnail] = useState(null)
-  const [message, setMessage] = useState("")
-  const navigate = useNavigate()
+  const [data, setData] = useState({ title: "", description: "" });
+  const [videoFile, setVideoFile] = useState(null);
+  const [thumbnail, setThumbnail] = useState(null);
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value })
-  }
+    setData({ ...data, [e.target.name]: e.target.value });
+  };
 
   const handleFileChange = (e) => {
     if (e.target.name === "videoFile") {
-      setVideoFile(e.target.files[0])
+      setVideoFile(e.target.files[0]);
     } else if (e.target.name === "thumbnail") {
-      setThumbnail(e.target.files[0])
+      setThumbnail(e.target.files[0]);
     }
-  }
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    const formData = new FormData()
-    formData.append("title", data.title)
-    formData.append("description", data.description)
-    formData.append("videoFile", videoFile)
-    formData.append("thumbnail", thumbnail)
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("title", data.title);
+    formData.append("description", data.description);
+    formData.append("videoFile", videoFile);
+    formData.append("thumbnail", thumbnail);
 
     try {
       const response = await api.post("/videos", formData, {
         headers: { "Content-Type": "multipart/form-data" },
-      })
-      setMessage(response.data.message)
-      navigate("/")
+      });
+      setMessage(response.data.message);
+      navigate("/");
     } catch (error) {
-      setMessage(error.response?.data?.message || "Failed to upload video")
+      setMessage(error.response?.data?.message || "Failed to upload video");
     }
-  }
+  };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-900 text-white p-4">
@@ -199,7 +195,7 @@ const UploadVideo = () => {
         )}
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default UploadVideo
+export default UploadVideo;

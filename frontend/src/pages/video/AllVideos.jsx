@@ -35,8 +35,8 @@
 //         {videos.length > 0 ? (
 //           videos.map((video) => (
 //             <div
-           
-//              key={video._id} 
+
+//              key={video._id}
 //              className="bg-white shadow rounded-lg overflow-hidden relative"
 //              onClick={() => navigate(`/videos/${video._id}`)}
 //              >
@@ -104,9 +104,8 @@
 
 // export default Home;
 
-
-import React, { useEffect, useState } from 'react';
-import api from '../../Api/api';
+import React, { useEffect, useState } from "react";
+import api from "../../Api/api";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
@@ -150,10 +149,12 @@ const Home = () => {
                     onEnded={() => setPlayingVideo(null)}
                   />
                 ) : (
-                  <div onClick={(e) => {
-                    e.stopPropagation();
-                    setPlayingVideo(video._id);
-                  }}>
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setPlayingVideo(video._id);
+                    }}
+                  >
                     <img
                       src={video.thumbnail}
                       alt={video.title}
@@ -186,8 +187,12 @@ const Home = () => {
 
                 {/* Details */}
                 <div>
-                  <h2 className="text-sm font-semibold line-clamp-2">{video.title}</h2>
-                  <p className="text-xs text-gray-400">{video.owner.fullName}</p>
+                  <h2 className="text-sm font-semibold line-clamp-2">
+                    {video.title}
+                  </h2>
+                  <p className="text-xs text-gray-400">
+                    {video.owner.fullName}
+                  </p>
                   <div className="flex text-xs text-gray-400 space-x-2">
                     <span>{video.views} views</span>
                     <span>• {video.duration}s</span>

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import api from '../Api/api';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import api from "../Api/api";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const [videos, setVideos] = useState([]);
@@ -25,7 +25,10 @@ const Home = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {videos.length > 0 ? (
           videos.map((video) => (
-            <div key={video._id} className="bg-white shadow rounded-lg overflow-hidden relative">
+            <div
+              key={video._id}
+              className="bg-white shadow rounded-lg overflow-hidden relative"
+            >
               {playingVideo === video._id ? (
                 // Video player
                 <video
@@ -70,7 +73,9 @@ const Home = () => {
                     alt={video.owner.username}
                     className="w-8 h-8 rounded-full mr-2"
                   />
-                  <span className="text-sm font-medium">{video.owner.fullName}</span>
+                  <span className="text-sm font-medium">
+                    {video.owner.fullName}
+                  </span>
                 </div>
                 <div className="flex justify-between mt-2 text-sm text-gray-400">
                   <span>Views: {video.views}</span>
@@ -82,18 +87,16 @@ const Home = () => {
           ))
         ) : (
           <div className="flex flex-col items-center justify-center p-6 bg-white dark:bg-gray-800 rounded-xl shadow-md">
-  <p className="text-lg font-medium text-gray-800 dark:text-gray-200 mb-4">
-    No videos available. Please login
-  </p>
-  <Link
-    to="/login"
-    className="px-6 py-2 bg-red-600 text-white font-semibold rounded-lg shadow hover:bg-red-700 transition duration-200"
-  >
-    Login
-  </Link>
-</div>
-
-
+            <p className="text-lg font-medium text-gray-800 dark:text-gray-200 mb-4">
+              No videos available. Please login
+            </p>
+            <Link
+              to="/login"
+              className="px-6 py-2 bg-red-600 text-white font-semibold rounded-lg shadow hover:bg-red-700 transition duration-200"
+            >
+              Login
+            </Link>
+          </div>
         )}
       </div>
     </div>

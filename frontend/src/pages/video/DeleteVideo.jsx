@@ -11,7 +11,7 @@ const DeleteVideo = () => {
     try {
       const response = await api.delete(`/videos/${id}`);
       setMessage(response.data.message || "Video deleted successfully!");
-      console.log(response.data)
+      console.log(response.data);
       // Redirect after delete
       setTimeout(() => {
         navigate("/");
@@ -28,7 +28,8 @@ const DeleteVideo = () => {
           Delete Video?
         </h1>
         <p className="text-gray-600 dark:text-gray-400 mb-6">
-          Are you sure you want to delete this video? This action cannot be undone.
+          Are you sure you want to delete this video? This action cannot be
+          undone.
         </p>
 
         {/* Action Buttons */}
