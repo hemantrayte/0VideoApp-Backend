@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import api from '../../Api/api';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import api from "../../Api/api";
+import { useNavigate } from "react-router-dom";
 
 const AllTweets = () => {
   const [tweets, setTweets] = useState([]);
   const [message, setMessage] = useState("");
-  const [currentUser, setCurrentUser] = useState(null)
+  const [currentUser, setCurrentUser] = useState(null);
 
   const navigate = useNavigate();
 
@@ -20,14 +20,12 @@ const AllTweets = () => {
     }
   };
 
-  
-
   const fetchUser = async () => {
     try {
       const response = await api.get("users/current-user");
       console.log(response.data.data);
       setCurrentUser(response.data.data);
-      setMessage(response.data.message)
+      setMessage(response.data.message);
     } catch (error) {
       setMessage(error.response?.data?.message || "Something went wrong");
     }
@@ -35,20 +33,18 @@ const AllTweets = () => {
 
   useEffect(() => {
     fetchAllTweet();
-    fetchUser()
+    fetchUser();
   }, []);
 
   return (
     <div className="min-h-screen bg-black text-white max-w-3xl mx-auto p-4 space-y-6">
       {/* Heading */}
-      <h1 className="text-3xl font-bold mb-4 text-center">
-        All Tweets
-      </h1>
+      <h1 className="text-3xl font-bold mb-4 text-center">All Tweets</h1>
 
       {/* Create Tweet Button */}
       <div className="flex justify-end mb-4">
         <button
-          onClick={() => navigate('/tweet/create')}
+          onClick={() => navigate("/tweet/create")}
           className="px-4 py-2 bg-red-600 text-white rounded-lg shadow hover:bg-red-700 transition duration-200"
         >
           Create Tweet
@@ -94,16 +90,12 @@ const AllTweets = () => {
           </div>
         ))
       ) : (
-        <p className="text-center text-gray-400">
-          No tweets available.
-        </p>
+        <p className="text-center text-gray-400">No tweets available.</p>
       )}
 
       {/* Message */}
       {message && (
-        <p className="text-center text-sm text-gray-400 mt-2">
-          {message}
-        </p>
+        <p className="text-center text-sm text-gray-400 mt-2">{message}</p>
       )}
     </div>
   );
@@ -111,15 +103,14 @@ const AllTweets = () => {
 
 export default AllTweets;
 
-
 // import React, { useEffect, useState } from 'react'
 // import api from '../../Api/api';
 
 // const AllTweets = () => {
-  
+
 //   const [tweet, setTweet] = useState("");
 //   const [message, setMessage] = useState("");
- 
+
 //   const fetchAllTweet = async() => {
 //     try {
 //       const response = await api.get("/tweets")
@@ -132,11 +123,9 @@ export default AllTweets;
 //     }
 //   }
 
-
 //   useEffect(() => {
 //      fetchAllTweet()
 //   },[])
-
 
 //   return (
 //     <div>
@@ -160,4 +149,3 @@ export default AllTweets;
 // }
 
 // export default AllTweets
-

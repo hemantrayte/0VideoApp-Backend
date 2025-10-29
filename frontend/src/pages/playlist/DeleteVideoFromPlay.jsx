@@ -26,8 +26,8 @@ const DeleteVideoFromPlay = () => {
           Remove Video from Playlist
         </h1>
         <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
-          Are you sure you want to remove this video from the playlist?  
-          This action cannot be undone.
+          Are you sure you want to remove this video from the playlist? This
+          action cannot be undone.
         </p>
 
         <div className="flex gap-4 justify-center">

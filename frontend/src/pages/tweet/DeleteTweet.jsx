@@ -16,9 +16,7 @@ const DeleteTweet = () => {
         navigate("/tweets");
       }, 1000);
     } catch (error) {
-      setMessage(
-        error.response?.data?.message || "Failed to delete the tweet"
-      );
+      setMessage(error.response?.data?.message || "Failed to delete the tweet");
     }
   };
 

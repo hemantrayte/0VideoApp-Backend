@@ -20,12 +20,10 @@ const PlaylistById = () => {
   };
 
   const handleClick = () => {
-    navigate(`/playlist/update/${id}`)
-  }
+    navigate(`/playlist/update/${id}`);
+  };
 
-  const handleaddVideo = () => {
-
-  }
+  const handleaddVideo = () => {};
 
   useEffect(() => {
     playListById();
@@ -93,20 +91,21 @@ const PlaylistById = () => {
                   </p>
                 </div>
                 <button
-                onClick={handleClick}
+                  onClick={handleClick}
                   className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition"
-                >Update Playlist</button>
+                >
+                  Update Playlist
+                </button>
                 <br />
                 <br />
 
                 <button
-                onClick={handleaddVideo}
+                  onClick={handleaddVideo}
                   className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition"
-                >Add Video To Playlist</button>
+                >
+                  Add Video To Playlist
+                </button>
               </div>
-
-              
-              
             ))}
           </div>
         </div>

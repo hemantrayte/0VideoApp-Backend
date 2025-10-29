@@ -65,7 +65,7 @@
 
 // export default CreateTweet;
 
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import api from "../../Api/api";
 import { useNavigate } from "react-router-dom";
 
@@ -73,11 +73,7 @@ const CreatePost = () => {
   const [post, setPost] = useState("");
   const [message, setMessage] = useState("");
 
-  const navigate = useNavigate()
-
- 
-
-
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -89,13 +85,11 @@ const CreatePost = () => {
       );
       setMessage(response.data.message);
       setPost(""); // clear input
-      navigate("/tweets")
+      navigate("/tweets");
     } catch (error) {
       setMessage(error.response?.data?.message || "Something went wrong");
     }
   };
-
- 
 
   return (
     <div className="max-w-2xl mx-auto bg-white dark:bg-gray-800 shadow rounded-lg p-4 mt-6">
@@ -136,7 +130,6 @@ const CreatePost = () => {
             >
               Post
             </button>
-
           </div>
 
           {/* Message */}
@@ -146,10 +139,9 @@ const CreatePost = () => {
             </p>
           )}
         </form>
-       
       </div>
-       {/* Your Tweets Button */}
-{/* {currentUser && (
+      {/* Your Tweets Button */}
+      {/* {currentUser && (
   <button
     onClick={() => navigate(`/tweets/${currentUser._id}`)}
     className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-full font-semibold transition mt-4"
@@ -157,7 +149,6 @@ const CreatePost = () => {
     Your Tweets
   </button>
 )} */}
-
     </div>
   );
 };

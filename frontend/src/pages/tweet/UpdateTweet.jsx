@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom';
-import api from '../../Api/api';
+import React, { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import api from "../../Api/api";
 
 const UpdateTweet = () => {
   const { id } = useParams();

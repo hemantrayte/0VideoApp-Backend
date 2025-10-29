@@ -6,8 +6,8 @@ const CreatePlaylist = () => {
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState(""); // success | error
 
-  const {id} = useParams()
-  const navigate = useNavigate()
+  const { id } = useParams();
+  const navigate = useNavigate();
 
   const [playList, setPlayList] = useState({
     name: "",
@@ -20,8 +20,6 @@ const CreatePlaylist = () => {
       [e.target.name]: e.target.value,
     });
   };
-
-
 
   const playListById = async () => {
     try {
@@ -44,22 +42,22 @@ const CreatePlaylist = () => {
 
       setMessage(response.data.message || "Playlist created successfully!");
       setStatus("success");
-  
+
       // reset inputs
       setPlayList({ name: "", description: "" });
-      navigate(-1)
+      navigate(-1);
     } catch (error) {
       setMessage(
-        error.response?.data?.message || "Something went wrong. Please try again"
+        error.response?.data?.message ||
+          "Something went wrong. Please try again"
       );
       setStatus("error");
     }
   };
 
-
   useEffect(() => {
-    playListById()
-  },[])
+    playListById();
+  }, []);
 
   return (
     <div className="max-w-md mx-auto mt-10 bg-white dark:bg-gray-900 rounded-xl shadow-lg p-6">
@@ -123,9 +121,12 @@ const CreatePlaylist = () => {
           Update Playlist
         </button>
         <Link to={`/playlist/delete/${playList._id}`}>
-        
-          <button type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition">Delete Playlist</button>
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition"
+          >
+            Delete Playlist
+          </button>
         </Link>
       </form>
     </div>

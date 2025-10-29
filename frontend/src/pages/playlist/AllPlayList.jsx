@@ -69,7 +69,8 @@ const AllPlayList = () => {
                     {playlist.description}
                   </p>
                   <p className="text-xs text-gray-400 mt-2">
-                    Created on {new Date(playlist.createdAt).toLocaleDateString()}
+                    Created on{" "}
+                    {new Date(playlist.createdAt).toLocaleDateString()}
                   </p>
                 </div>
               </div>

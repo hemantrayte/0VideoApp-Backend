@@ -11,7 +11,7 @@ const CreatePlaylist = () => {
     description: "",
   });
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     setPlayList({
@@ -24,7 +24,7 @@ const CreatePlaylist = () => {
     e.preventDefault();
     setMessage("");
     setStatus("");
-   
+
     try {
       const response = await api.post("/playlist", playList, {
         headers: { "Content-Type": "application/json" },
@@ -35,10 +35,11 @@ const CreatePlaylist = () => {
 
       // reset inputs
       setPlayList({ name: "", description: "" });
-      navigate(-1)
+      navigate(-1);
     } catch (error) {
       setMessage(
-        error.response?.data?.message || "Something went wrong. Please try again"
+        error.response?.data?.message ||
+          "Something went wrong. Please try again"
       );
       setStatus("error");
     }
