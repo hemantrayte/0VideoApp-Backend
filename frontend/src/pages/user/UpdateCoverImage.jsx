@@ -33,7 +33,9 @@ const UpdateCoverImage = () => {
       navigate("/user/current-user");
     } catch (error) {
       console.error("Error while updating cover image:", error);
-      setMessage(error.response?.data?.message || "Failed to update cover image");
+      setMessage(
+        error.response?.data?.message || "Failed to update cover image"
+      );
     }
   };
 
@@ -41,7 +43,7 @@ const UpdateCoverImage = () => {
     <div className="flex justify-center items-center min-h-screen bg-gray-100 dark:bg-gray-900 p-6">
       <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
         <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-6 text-center">
-        Update Cover Image
+          Update Cover Image
         </h1>
 
         <form onSubmit={handleAvatarSubmit} className="space-y-4">
@@ -79,4 +81,3 @@ const UpdateCoverImage = () => {
 };
 
 export default UpdateCoverImage;
-

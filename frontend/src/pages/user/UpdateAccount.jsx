@@ -89,8 +89,8 @@ const UpdateAccount = () => {
           </button>
         </div>
 
-         {/* Update Avatar */}
-         <div className="mb-6 text-center">
+        {/* Update Avatar */}
+        <div className="mb-6 text-center">
           <button
             onClick={() => navigate("/user/update/password")}
             className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition"
@@ -98,7 +98,6 @@ const UpdateAccount = () => {
             Update Password
           </button>
         </div>
-
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">

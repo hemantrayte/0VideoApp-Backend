@@ -33,7 +33,6 @@ const CurrentUser = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900 p-6">
       <div className="bg-white dark:bg-gray-800 shadow-lg rounded-2xl w-full max-w-md overflow-hidden">
-        
         {/* Cover Image (show only if backend sends it) */}
         {currentUser.coverImage && (
           <div className="h-32 w-full">
@@ -88,7 +87,7 @@ const CurrentUser = () => {
             onClick={() => navigate(`/playlist/user/${currentUser._id}`)}
             className="mt-6 px-6 py-2 bg-red-600 text-white font-semibold rounded-full hover:bg-red-700 shadow transition duration-200"
           >
-            User  Playlist
+            User Playlist
           </button>
         </div>
       </div>

@@ -7,7 +7,6 @@ const Login = () => {
     email: "",
     password: "",
   });
-  
 
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
@@ -24,11 +23,10 @@ const Login = () => {
       const res = await api.post("/users/login", formData, {
         headers: { "Content-Type": "application/json" },
       });
-       
-      
+
       setMessage(res.data.message || "User logged in successfully!");
 
-      console.log("login")
+      console.log("login");
       // Save token
       if (res.data?.data?.accessToken) {
         localStorage.setItem("accessToken", res.data.data.accessToken);
@@ -41,7 +39,8 @@ const Login = () => {
       navigate("/");
     } catch (error) {
       setMessage(
-        error.response?.data?.message || "Something went wrong. Please try again"
+        error.response?.data?.message ||
+          "Something went wrong. Please try again"
       );
     }
   };

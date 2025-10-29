@@ -19,7 +19,6 @@ const ChannelProfile = () => {
     }
   };
 
-
   const fetchChannelProfile = async () => {
     try {
       const response = await api.get(`/users/c/${username}`);
@@ -30,13 +29,9 @@ const ChannelProfile = () => {
     }
   };
 
-
-
-
-
   useEffect(() => {
     fetchChannelProfile();
-    fetchUser()
+    fetchUser();
   }, []);
 
   return (
@@ -97,7 +92,6 @@ const ChannelProfile = () => {
                   </Link>
                 </>
               )}
-
             </ul>
           </div>
         </div>
@@ -108,7 +102,6 @@ const ChannelProfile = () => {
       )}
     </div>
   );
-
 
   // return (
   //   <div className="max-w-5xl mx-auto bg-black min-h-screen text-white">
