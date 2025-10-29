@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react";
 import api from "../../Api/api";
 import { useParams } from "react-router-dom";
-import {
-  ThumbsUp,
-  Users,
-  Video,
-  Eye,
-} from "lucide-react"; // nice icons
+import { ThumbsUp, Users, Video, Eye } from "lucide-react"; // nice icons
 
 const ChannelStats = () => {
   const [channelStats, setChannelStats] = useState(null);
@@ -92,9 +87,7 @@ const ChannelStats = () => {
             <Video className="text-green-600 dark:text-green-300 w-6 h-6" />
           </div>
           <div>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              Videos
-            </p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Videos</p>
             <p className="text-xl font-bold text-gray-900 dark:text-white">
               {channelStats.totalVideos}
             </p>
