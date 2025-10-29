@@ -1,6 +1,17 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Search, Bell, Video, User, Menu, LogOut, Plus, ChartArea, ChartBar, List } from "lucide-react";
+import {
+  Search,
+  Bell,
+  Video,
+  User,
+  Menu,
+  LogOut,
+  Plus,
+  ChartArea,
+  ChartBar,
+  List,
+} from "lucide-react";
 import api from "../Api/api";
 
 const Header = () => {
@@ -86,8 +97,6 @@ const Header = () => {
         >
           <List className="h-6 w-6 text-gray-700 dark:text-gray-200" />
         </Link>
-
-        
 
         {/* Logout button (icon style) */}
         <button
