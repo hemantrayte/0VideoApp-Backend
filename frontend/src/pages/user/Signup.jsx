@@ -10,9 +10,7 @@ const Signup = () => {
     password: "",
   });
 
-
   const navigate = useNavigate();
-
 
   const [avatar, setAvatar] = useState(null);
   const [coverImage, setCoverImage] = useState(null);
@@ -41,14 +39,13 @@ const Signup = () => {
       data.append("password", formData.password);
       if (avatar) data.append("avatar", avatar);
       if (coverImage) data.append("coverImage", coverImage);
-  
+
       // Use API helper instead of axios
       const res = await api.post("/users/register", data, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-  
-      setMessage(res.data.message || "User registered successfully!");
 
+      setMessage(res.data.message || "User registered successfully!");
 
       setFormData({
         fullName: "",
@@ -96,7 +93,6 @@ const Signup = () => {
           />
 
           <input
-           
             name="email"
             placeholder="Email Address"
             value={formData.email}

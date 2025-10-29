@@ -1,29 +1,30 @@
-import React, { useState } from 'react'
-import api from '../../Api/api';
+import React, { useState } from "react";
+import api from "../../Api/api";
 
 const AddCommentVideo = ({ id, onCommentAdded }) => {
-
   const [newComment, setNewComment] = useState("");
-  
+
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
     if (!newComment.trim()) return;
 
     try {
-      const res = await api.post(`/comments/${id}`, {
-        content: newComment,
-      },
+      const res = await api.post(
+        `/comments/${id}`,
+        {
+          content: newComment,
+        },
         {
           headers: { "Content-Type": "application/json" },
-        });
+        }
+      );
       setNewComment("");
-      console.log(res.data.data)
-      if (onCommentAdded) onCommentAdded()
+      console.log(res.data.data);
+      if (onCommentAdded) onCommentAdded();
     } catch (error) {
       console.log("Error posting comment", error);
     }
   };
-
 
   return (
     <div>
@@ -43,7 +44,7 @@ const AddCommentVideo = ({ id, onCommentAdded }) => {
         </button>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default AddCommentVideo
+export default AddCommentVideo;
