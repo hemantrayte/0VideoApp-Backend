@@ -1,187 +1,181 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import App from "./App.jsx";
 import { BrowserRouter, createBrowserRouter } from "react-router-dom";
-import Home from './pages/Home.jsx';
+import Home from "./pages/Home.jsx";
 
-
-import { RouterProvider } from 'react-router-dom';
-import Signup from './pages/user/Signup.jsx';
-import Login from './pages/user/Login.jsx'
-import Logout from './pages/user/Logout.jsx'
-import AllVideos from './pages/video/AllVideos.jsx'
-import SingleVideo from './pages/video/SingleVideo.jsx';
-import UpdateAccount from './pages/user/UpdateAccount.jsx'
-import CurrentUser from './pages/user/CurrentUser.jsx';
-import UpdateAvatar from './pages/user/UpdateAvatar.jsx';
-import UpdateCovertImage from './pages/user/UpdateCoverImage.jsx'
-import ChangePassword from './pages/user/ChangePassword.jsx'
-import UpdateVideo from './pages/video/UpdateVideo.jsx';
-import DeleteVideo from './pages/video/DeleteVideo.jsx';
-import PublishStatus from './pages/video/PublishStatus.jsx';
-import UploadVideo from './pages/video/UploadVideo.jsx';
-import CreatePost from './pages/tweet/CreateTweet.jsx';
-import AllTweets from './pages/tweet/AllTweets.jsx';
-import GetUserTweet from './pages/tweet/GetUserTweet.jsx';
-import UpdateTweet from './pages/tweet/UpdateTweet.jsx';
-import DeleteTweet from './pages/tweet/DeleteTweet.jsx';
-import ChannelProfile from './pages/user/ChannelProfile.jsx';
-import UpdateComment from './pages/comments/UpdateComment.jsx';
-import ChannelStats from './pages/dashboard-c/ChannelStats.jsx';
-import ChannelVideos from './pages/dashboard-c/ChannelVideos.jsx';
-import CreatePlaylist from './pages/playlist/CreatePlaylist.jsx';
-import DeletePlaylist from './pages/playlist/DeletePlaylist.jsx';
-import PlaylistById from './pages/playlist/PlaylistById.jsx';
-import UpdatePlaylist from './pages/playlist/UpdatePlaylist.jsx'
-import UsersPlaylist from './pages/playlist/UsersPlaylist.jsx'
-import AllPlayList from './pages/playlist/AllPlayList.jsx';
+import { RouterProvider } from "react-router-dom";
+import Signup from "./pages/user/Signup.jsx";
+import Login from "./pages/user/Login.jsx";
+import Logout from "./pages/user/Logout.jsx";
+import AllVideos from "./pages/video/AllVideos.jsx";
+import SingleVideo from "./pages/video/SingleVideo.jsx";
+import UpdateAccount from "./pages/user/UpdateAccount.jsx";
+import CurrentUser from "./pages/user/CurrentUser.jsx";
+import UpdateAvatar from "./pages/user/UpdateAvatar.jsx";
+import UpdateCovertImage from "./pages/user/UpdateCoverImage.jsx";
+import ChangePassword from "./pages/user/ChangePassword.jsx";
+import UpdateVideo from "./pages/video/UpdateVideo.jsx";
+import DeleteVideo from "./pages/video/DeleteVideo.jsx";
+import PublishStatus from "./pages/video/PublishStatus.jsx";
+import UploadVideo from "./pages/video/UploadVideo.jsx";
+import CreatePost from "./pages/tweet/CreateTweet.jsx";
+import AllTweets from "./pages/tweet/AllTweets.jsx";
+import GetUserTweet from "./pages/tweet/GetUserTweet.jsx";
+import UpdateTweet from "./pages/tweet/UpdateTweet.jsx";
+import DeleteTweet from "./pages/tweet/DeleteTweet.jsx";
+import ChannelProfile from "./pages/user/ChannelProfile.jsx";
+import UpdateComment from "./pages/comments/UpdateComment.jsx";
+import ChannelStats from "./pages/dashboard-c/ChannelStats.jsx";
+import ChannelVideos from "./pages/dashboard-c/ChannelVideos.jsx";
+import CreatePlaylist from "./pages/playlist/CreatePlaylist.jsx";
+import DeletePlaylist from "./pages/playlist/DeletePlaylist.jsx";
+import PlaylistById from "./pages/playlist/PlaylistById.jsx";
+import UpdatePlaylist from "./pages/playlist/UpdatePlaylist.jsx";
+import UsersPlaylist from "./pages/playlist/UsersPlaylist.jsx";
+import AllPlayList from "./pages/playlist/AllPlayList.jsx";
 
 const router = createBrowserRouter([
   {
-    path:"/",
-    element:<App />,
-    children:[
-      {path:"/", element:<AllVideos />},
+    path: "/",
+    element: <App />,
+    children: [
+      { path: "/", element: <AllVideos /> },
       {
-        path:"signup",
-        element:<Signup />
+        path: "signup",
+        element: <Signup />,
       },
       {
-        path:"login",
-        element:<Login/>
+        path: "login",
+        element: <Login />,
       },
       {
-        path:"log-out",
-        element:<Logout />
+        path: "log-out",
+        element: <Logout />,
       },
       {
-            path:"user/update",
-            element:<UpdateAccount />
+        path: "user/update",
+        element: <UpdateAccount />,
       },
       {
-        path:"user/update/avatar",
-        element:<UpdateAvatar />
+        path: "user/update/avatar",
+        element: <UpdateAvatar />,
       },
       {
-        path:"user/update/cover-image",
-        element:<UpdateCovertImage />
+        path: "user/update/cover-image",
+        element: <UpdateCovertImage />,
       },
       {
-        path:"user/update/password",
-        element:<ChangePassword />
+        path: "user/update/password",
+        element: <ChangePassword />,
       },
       {
-        path:"user/current-user",
-        element:<CurrentUser />
-      }
-      ,
-
+        path: "user/current-user",
+        element: <CurrentUser />,
+      },
 
       //video routes
       {
-        path:"videos",
-        element:<AllVideos />
+        path: "videos",
+        element: <AllVideos />,
       },
       {
-        path:"videos/upload",
-        element:<UploadVideo />
+        path: "videos/upload",
+        element: <UploadVideo />,
       },
       {
-        path:"videos/:id",
-        element:<SingleVideo />
-      }, 
-      {
-        path:"videos/update/:id",
-        element:<UpdateVideo />
+        path: "videos/:id",
+        element: <SingleVideo />,
       },
       {
-        path:"videos/delete/:id",
-        element:<DeleteVideo />
+        path: "videos/update/:id",
+        element: <UpdateVideo />,
       },
       {
-        path:"videos/status/:id",
-        element:<PublishStatus />
+        path: "videos/delete/:id",
+        element: <DeleteVideo />,
+      },
+      {
+        path: "videos/status/:id",
+        element: <PublishStatus />,
       },
 
       //chenneal
       {
-        path:"channel/profile/:username",
-        element:<ChannelProfile />
-      },
-    
-      {
-        path:"channel/stats/:id",
-        element:<ChannelStats />
+        path: "channel/profile/:username",
+        element: <ChannelProfile />,
       },
 
       {
-        path:"channel/videos/:id",
-        element:<ChannelVideos />
+        path: "channel/stats/:id",
+        element: <ChannelStats />,
+      },
+
+      {
+        path: "channel/videos/:id",
+        element: <ChannelVideos />,
       },
 
       //tweet post community post
       {
-        path:"tweets",
-        element:<AllTweets />
+        path: "tweets",
+        element: <AllTweets />,
       },
       {
-        path:"tweets/:id",
-        element:<GetUserTweet />
+        path: "tweets/:id",
+        element: <GetUserTweet />,
       },
       {
-         path:"tweets/update/:id",
-         element:<UpdateTweet />
+        path: "tweets/update/:id",
+        element: <UpdateTweet />,
       },
       {
-          path:"tweets/delete/:id",
-          element:<DeleteTweet />
+        path: "tweets/delete/:id",
+        element: <DeleteTweet />,
       },
       {
-        path:"tweet/create",
-        element:<CreatePost />
+        path: "tweet/create",
+        element: <CreatePost />,
       },
-      
+
       //comments
       {
-        path:"comments/update/:id",
-        element:<UpdateComment />
+        path: "comments/update/:id",
+        element: <UpdateComment />,
       },
 
       //playlist
       {
-        path:"playlist/create",
-        element:<CreatePlaylist />
+        path: "playlist/create",
+        element: <CreatePlaylist />,
       },
       {
-        path:"playlist",
-        element:<AllPlayList />
+        path: "playlist",
+        element: <AllPlayList />,
       },
       {
-        path:"playlist/delete/:id",
-        element:<DeletePlaylist />
+        path: "playlist/delete/:id",
+        element: <DeletePlaylist />,
       },
       {
-        path:"playlist/:id",
-        element:<PlaylistById />
+        path: "playlist/:id",
+        element: <PlaylistById />,
       },
       {
-        path:"playlist/update/:id",
-        element:<UpdatePlaylist />
+        path: "playlist/update/:id",
+        element: <UpdatePlaylist />,
       },
       {
-        path:"playlist/user/:id",
-        element:<UsersPlaylist />
-      }
+        path: "playlist/user/:id",
+        element: <UsersPlaylist />,
+      },
+    ],
+  },
+]);
 
-    ]
-  }
-])
-
-
-createRoot(document.getElementById('root')).render(
+createRoot(document.getElementById("root")).render(
   <StrictMode>
     <RouterProvider router={router} />
-    
-  </StrictMode>,
-)
+  </StrictMode>
+);
