@@ -14,6 +14,7 @@ const getChannelStats = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Channel ID is required");
   }
 
+  
   // 1. Total videos & total views
   const videoStats = await Video.aggregate([
     { $match: { owner: new mongoose.Types.ObjectId(channelId) } },
@@ -37,7 +38,7 @@ const getChannelStats = asyncHandler(async (req, res) => {
   // 3. Total likes on channel’s videos
   const videoIds = await Video.find({ owner: channelId }).distinct("_id");
   const totalLikes = await Like.countDocuments({ video: { $in: videoIds } });
-  
+
   return res.status(200).json(
     new ApiResponse(
       200,
