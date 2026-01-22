@@ -239,6 +239,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
   }
 });
 
+
 const changeCurrentPassword = asyncHandler(async (req, res) => {
   const { oldPassword, newPassword } = req.body;
 
@@ -256,6 +257,7 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, {}, "Password changed successfully"));
 });
+
 
 const getCurrentUser = asyncHandler(async (req, res) => {
   return res
