@@ -28,6 +28,7 @@ const createPlaylist = asyncHandler(async (req, res) => {
 const allPlaylist = asyncHandler(async (req, res) => {
   const userId = req.user?._id;
 
+  
   if (!userId) {
     throw new ApiError(400, "User ID are required");
   }
