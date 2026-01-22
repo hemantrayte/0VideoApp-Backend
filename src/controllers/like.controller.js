@@ -51,6 +51,7 @@ const toggleCommentLike = asyncHandler(async (req, res) => {
     likedBy: userId,
   });
 
+  
   if (existingLike) {
     // User has already liked → remove the like
     await existingLike.deleteOne();
