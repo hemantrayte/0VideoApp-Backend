@@ -1,3 +1,178 @@
+
+import React, { useEffect, useState } from "react";
+import api from "../../Api/api";
+import { useNavigate } from "react-router-dom";
+
+/**
+ * AllComemnts Component
+ * --------------------
+ * Displays all comments for a specific video
+ *
+ * Props:
+ * - id: video ID for fetching comments
+ * - refresh: trigger to re-fetch comments after add/update/delete
+ */
+const AllComemnts = ({ id, refresh }) => {
+  // Message state for errors or info
+  const [message, setMessage] = useState("");
+
+  // Stores list of comments for the video
+  const [comments, setComments] = useState([]);
+
+  // Stores currently logged-in user details
+  const [currentUser, setCurrentUser] = useState(null);
+
+  const navigate = useNavigate();
+
+  /**
+   * Fetch logged-in user data
+   * Used to check ownership of comments (Update/Delete permissions)
+   */
+  const fetchCurrentUser = async () => {
+    try {
+      const res = await api.get("/users/current-user");
+      setCurrentUser(res.data.data);
+    } catch (error) {
+      console.log("Could not fetch current user", error);
+    }
+  };
+
+  /**
+   * Fetch all comments for the given video
+   */
+  const Allcomments = async () => {
+    try {
+      const response = await api.get(`/comments/${id}`);
+      setComments(response.data.data.comments);
+    } catch (error) {
+      setMessage(
+        error.response?.data?.message ||
+          "Something went wrong. Please try again"
+      );
+    }
+  };
+
+  /**
+   * Toggle like on a comment
+   */
+  const handleLike = async (id) => {
+    try {
+      const response = await api.post(`/likes/toggle/c/${id}`);
+      console.log(response.data);
+    } catch (error) {
+      setMessage(error.response?.data?.message || "Error liking comment");
+    }
+  };
+
+  /**
+   * Delete a comment (only owner can delete)
+   * Removes the comment from UI after successful deletion
+   */
+  const handleDelete = async (id) => {
+    try {
+      await api.delete(`/comments/c/${id}`);
+      setComments((prev) => prev.filter((c) => c._id !== id));
+    } catch (error) {
+      console.log(error.response?.data || error.message);
+    }
+  };
+
+  /**
+   * Fetch comments and user info
+   * Runs when video ID changes or refresh flag updates
+   */
+  useEffect(() => {
+    Allcomments();
+    fetchCurrentUser();
+  }, [id, refresh]);
+
+  return (
+    <div>
+      {comments.length > 0 ? (
+        <div>
+          {comments.map((comment) => (
+            <div
+              key={comment._id}
+              className="flex items-start space-x-3 p-3 border-b dark:border-gray-700"
+            >
+              {/* Comment owner's avatar */}
+              <img
+                src={comment.owner.avatar}
+                alt={comment.owner.username}
+                className="w-10 h-10 rounded-full object-cover"
+              />
+
+              {/* Comment details */}
+              <div className="flex-1">
+                {/* Username and creation date */}
+                <div className="flex items-center space-x-2">
+                  <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
+                    {comment.owner.username}
+                  </h3>
+                  <span className="text-xs text-gray-500">
+                    {new Date(comment.createdAt).toLocaleDateString()}
+                  </span>
+                </div>
+
+                {/* Comment text */}
+                <p className="text-gray-700 dark:text-gray-300 mt-1">
+                  {comment.content}
+                </p>
+
+                {/* Action buttons */}
+                <div className="flex space-x-4 mt-2 text-sm">
+                  {/* Like comment */}
+                  <button
+                    onClick={() => handleLike(comment._id)}
+                    className="text-blue-600 hover:underline"
+                  >
+                    👍 Like{" "}
+                    {comment.likesCount > 0 && `(${comment.likesCount})`}
+                  </button>
+
+                  {/* Reply (future feature) */}
+                  <button className="text-gray-600 hover:underline">
+                    Reply
+                  </button>
+
+                  {/* Show Update/Delete only if current user is the owner */}
+                  {currentUser?._id === comment.owner._id && (
+                    <>
+                      <button
+                        onClick={() =>
+                          navigate(`/comments/update/${comment._id}`)
+                        }
+                        className="text-yellow-600 hover:underline"
+                      >
+                        Update
+                      </button>
+                      <button
+                        onClick={() => handleDelete(comment._id)}
+                        className="text-red-600 hover:underline"
+                      >
+                        Delete
+                      </button>
+                    </>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        // Loading or empty state
+        <div>
+          Loading the Comments
+          <p>{message}</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default AllComemnts;
+
+
 // import React, { useEffect, useState } from 'react'
 // import api from '../../Api/api';
 
@@ -101,141 +276,141 @@
 
 // export default AllComemnts
 
-import React, { useEffect, useState } from "react";
-import api from "../../Api/api";
-import { useNavigate } from "react-router-dom";
+// import React, { useEffect, useState } from "react";
+// import api from "../../Api/api";
+// import { useNavigate } from "react-router-dom";
 
-const AllComemnts = ({ id, refresh }) => {
-  const [message, setMessage] = useState("");
-  const [comments, setComments] = useState([]);
-  const [currentUser, setCurrentUser] = useState(null);
+// const AllComemnts = ({ id, refresh }) => {
+//   const [message, setMessage] = useState("");
+//   const [comments, setComments] = useState([]);
+//   const [currentUser, setCurrentUser] = useState(null);
 
-  const navigate = useNavigate();
+//   const navigate = useNavigate();
 
-  const fetchCurrentUser = async () => {
-    try {
-      const res = await api.get("/users/current-user");
-      setCurrentUser(res.data.data);
-    } catch (error) {
-      console.log("Could not fetch current user", error);
-    }
-  };
+//   const fetchCurrentUser = async () => {
+//     try {
+//       const res = await api.get("/users/current-user");
+//       setCurrentUser(res.data.data);
+//     } catch (error) {
+//       console.log("Could not fetch current user", error);
+//     }
+//   };
 
-  const Allcomments = async () => {
-    try {
-      const response = await api.get(`/comments/${id}`);
-      setComments(response.data.data.comments);
-    } catch (error) {
-      setMessage(
-        error.response?.data?.message ||
-          "Something went wrong. Please try again"
-      );
-    }
-  };
+//   const Allcomments = async () => {
+//     try {
+//       const response = await api.get(`/comments/${id}`);
+//       setComments(response.data.data.comments);
+//     } catch (error) {
+//       setMessage(
+//         error.response?.data?.message ||
+//           "Something went wrong. Please try again"
+//       );
+//     }
+//   };
 
-  const handleLike = async (id) => {
-    try {
-      const response = await api.post(`/likes/toggle/c/${id}`);
-      console.log(response.data);
-    } catch (error) {
-      setMessage(error.response?.data?.message || "Error liking comment");
-    }
-  };
+//   const handleLike = async (id) => {
+//     try {
+//       const response = await api.post(`/likes/toggle/c/${id}`);
+//       console.log(response.data);
+//     } catch (error) {
+//       setMessage(error.response?.data?.message || "Error liking comment");
+//     }
+//   };
 
-  const handleDelete = async (id) => {
-    try {
-      await api.delete(`/comments/c/${id}`);
-      setComments((prev) => prev.filter((c) => c._id !== id)); // remove from UI
-    } catch (error) {
-      console.log(error.response?.data || error.message);
-    }
-  };
+//   const handleDelete = async (id) => {
+//     try {
+//       await api.delete(`/comments/c/${id}`);
+//       setComments((prev) => prev.filter((c) => c._id !== id)); // remove from UI
+//     } catch (error) {
+//       console.log(error.response?.data || error.message);
+//     }
+//   };
 
-  // later you can implement handleUpdate (open modal/edit mode)
+//   // later you can implement handleUpdate (open modal/edit mode)
 
-  useEffect(() => {
-    Allcomments();
-    fetchCurrentUser();
-  }, [id, refresh]);
+//   useEffect(() => {
+//     Allcomments();
+//     fetchCurrentUser();
+//   }, [id, refresh]);
 
-  return (
-    <div>
-      {comments.length > 0 ? (
-        <div>
-          {comments.map((comment) => (
-            <div
-              key={comment._id}
-              className="flex items-start space-x-3 p-3 border-b dark:border-gray-700"
-            >
-              {/* Avatar */}
-              <img
-                src={comment.owner.avatar}
-                alt={comment.owner.username}
-                className="w-10 h-10 rounded-full object-cover"
-              />
+//   return (
+//     <div>
+//       {comments.length > 0 ? (
+//         <div>
+//           {comments.map((comment) => (
+//             <div
+//               key={comment._id}
+//               className="flex items-start space-x-3 p-3 border-b dark:border-gray-700"
+//             >
+//               {/* Avatar */}
+//               <img
+//                 src={comment.owner.avatar}
+//                 alt={comment.owner.username}
+//                 className="w-10 h-10 rounded-full object-cover"
+//               />
 
-              {/* Comment Content */}
-              <div className="flex-1">
-                {/* Username + Date */}
-                <div className="flex items-center space-x-2">
-                  <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
-                    {comment.owner.username}
-                  </h3>
-                  <span className="text-xs text-gray-500">
-                    {new Date(comment.createdAt).toLocaleDateString()}
-                  </span>
-                </div>
+//               {/* Comment Content */}
+//               <div className="flex-1">
+//                 {/* Username + Date */}
+//                 <div className="flex items-center space-x-2">
+//                   <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
+//                     {comment.owner.username}
+//                   </h3>
+//                   <span className="text-xs text-gray-500">
+//                     {new Date(comment.createdAt).toLocaleDateString()}
+//                   </span>
+//                 </div>
 
-                {/* Comment text */}
-                <p className="text-gray-700 dark:text-gray-300 mt-1">
-                  {comment.content}
-                </p>
+//                 {/* Comment text */}
+//                 <p className="text-gray-700 dark:text-gray-300 mt-1">
+//                   {comment.content}
+//                 </p>
 
-                {/* Actions */}
-                <div className="flex space-x-4 mt-2 text-sm">
-                  <button
-                    onClick={() => handleLike(comment._id)}
-                    className="text-blue-600 hover:underline"
-                  >
-                    👍 Like{" "}
-                    {comment.likesCount > 0 && `(${comment.likesCount})`}
-                  </button>
-                  <button className="text-gray-600 hover:underline">
-                    Reply
-                  </button>
+//                 {/* Actions */}
+//                 <div className="flex space-x-4 mt-2 text-sm">
+//                   <button
+//                     onClick={() => handleLike(comment._id)}
+//                     className="text-blue-600 hover:underline"
+//                   >
+//                     👍 Like{" "}
+//                     {comment.likesCount > 0 && `(${comment.likesCount})`}
+//                   </button>
+//                   <button className="text-gray-600 hover:underline">
+//                     Reply
+//                   </button>
 
-                  {/* ✅ Only show Update/Delete if current user is owner */}
-                  {currentUser?._id === comment.owner._id && (
-                    <>
-                      <button
-                        onClick={() =>
-                          navigate(`/comments/update/${comment._id}`)
-                        }
-                        className="text-yellow-600 hover:underline"
-                      >
-                        Update
-                      </button>
-                      <button
-                        onClick={() => handleDelete(comment._id)}
-                        className="text-red-600 hover:underline"
-                      >
-                        Delete
-                      </button>
-                    </>
-                  )}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div>
-          Loading the Comments
-          <p>{message}</p>
-        </div>
-      )}
-    </div>
-  );
-};
+//                   {/* ✅ Only show Update/Delete if current user is owner */}
+//                   {currentUser?._id === comment.owner._id && (
+//                     <>
+//                       <button
+//                         onClick={() =>
+//                           navigate(`/comments/update/${comment._id}`)
+//                         }
+//                         className="text-yellow-600 hover:underline"
+//                       >
+//                         Update
+//                       </button>
+//                       <button
+//                         onClick={() => handleDelete(comment._id)}
+//                         className="text-red-600 hover:underline"
+//                       >
+//                         Delete
+//                       </button>
+//                     </>
+//                   )}
+//                 </div>
+//               </div>
+//             </div>
+//           ))}
+//         </div>
+//       ) : (
+//         <div>
+//           Loading the Comments
+//           <p>{message}</p>
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
 
-export default AllComemnts;
+// export default AllComemnts;
