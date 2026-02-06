@@ -39,8 +39,6 @@ const subscriptionSchema = new Schema(
 // Export Subscription model
 export const Subscription = mongoose.model("Subscription", subscriptionSchema);
 
-
-
 // import mongoose, { Schema } from "mongoose";
 
 // const subscriptionSchema = new Schema(
