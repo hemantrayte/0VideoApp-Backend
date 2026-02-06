@@ -38,7 +38,6 @@ export const errorHandler = (err, req, res, next) => {
   });
 };
 
-
 // // middlewares/error.middleware.js
 // import { ApiResponse } from "../utils/ApiResponse.js";
 
