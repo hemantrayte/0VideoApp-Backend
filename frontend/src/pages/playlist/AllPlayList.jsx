@@ -3,19 +3,32 @@ import api from "../../Api/api";
 import { useNavigate } from "react-router-dom";
 
 const AllPlayList = () => {
+
+  // State to store all playlists fetched from backend
   const [data, setData] = useState([]);
+
+  // Hook for programmatic navigation
   const navigate = useNavigate();
 
+  // Function to fetch all playlists
   const allPlaylist = async () => {
     try {
+      // Send GET request to backend
       const response = await api.get("/playlist");
+
+      // Log playlist data for debugging
       console.log(response.data.data);
+
+      // Store playlists in state
       setData(response.data.data);
+
     } catch (error) {
+      // Handle and log errors safely
       console.log(error.response?.data || error.message);
     }
   };
 
+  // Fetch playlists when component mounts
   useEffect(() => {
     allPlaylist();
   }, []);
@@ -23,11 +36,14 @@ const AllPlayList = () => {
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-6">
       <div className="max-w-7xl mx-auto">
+
         {/* Header Section */}
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
             All Playlists
           </h1>
+
+          {/* Navigate to create playlist page */}
           <button
             onClick={() => navigate("/playlist/create")}
             className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium shadow-md transition"
@@ -36,18 +52,27 @@ const AllPlayList = () => {
           </button>
         </div>
 
-        {/* Playlist Grid */}
+        {/* Playlist Grid Section */}
         {data.length > 0 ? (
+
+          // If playlists exist, show them in a responsive grid
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
             {data.map((playlist) => (
+
+              // Individual playlist card
               <div
                 key={playlist._id}
                 className="bg-white dark:bg-gray-800 rounded-xl shadow hover:shadow-lg transition cursor-pointer overflow-hidden"
+
+                // Navigate to specific playlist details page
                 onClick={() => navigate(`/playlist/${playlist._id}`)}
               >
-                {/* Playlist Thumbnail */}
+
+                {/* Playlist Thumbnail Section */}
                 <div className="relative">
                   <img
+                    // Use playlist thumbnail if available, otherwise fallback image
                     src={
                       playlist.thumbnail ||
                       "https://via.placeholder.com/300x180.png?text=Playlist"
@@ -55,28 +80,37 @@ const AllPlayList = () => {
                     alt={playlist.name}
                     className="w-full h-40 object-cover"
                   />
+
+                  {/* Video count badge */}
                   <span className="absolute bottom-2 right-2 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded">
                     {playlist.videos?.length || 0} videos
                   </span>
                 </div>
 
-                {/* Playlist Info */}
+                {/* Playlist Info Section */}
                 <div className="p-4">
                   <h3 className="font-semibold text-base mb-1 line-clamp-1 text-gray-900 dark:text-white">
                     {playlist.name}
                   </h3>
+
                   <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
                     {playlist.description}
                   </p>
+
+                  {/* Display formatted creation date */}
                   <p className="text-xs text-gray-400 mt-2">
                     Created on{" "}
                     {new Date(playlist.createdAt).toLocaleDateString()}
                   </p>
                 </div>
+
               </div>
             ))}
+
           </div>
         ) : (
+
+          // Show loading message if no playlists yet
           <h1 className="text-lg text-gray-600 dark:text-gray-300">
             Loading playlists...
           </h1>
@@ -87,3 +121,95 @@ const AllPlayList = () => {
 };
 
 export default AllPlayList;
+
+
+
+// import React, { useEffect, useState } from "react";
+// import api from "../../Api/api";
+// import { useNavigate } from "react-router-dom";
+
+// const AllPlayList = () => {
+//   const [data, setData] = useState([]);
+//   const navigate = useNavigate();
+
+//   const allPlaylist = async () => {
+//     try {
+//       const response = await api.get("/playlist");
+//       console.log(response.data.data);
+//       setData(response.data.data);
+//     } catch (error) {
+//       console.log(error.response?.data || error.message);
+//     }
+//   };
+
+//   useEffect(() => {
+//     allPlaylist();
+//   }, []);
+
+//   return (
+//     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-6">
+//       <div className="max-w-7xl mx-auto">
+//         {/* Header Section */}
+//         <div className="flex items-center justify-between mb-6">
+//           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+//             All Playlists
+//           </h1>
+//           <button
+//             onClick={() => navigate("/playlist/create")}
+//             className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium shadow-md transition"
+//           >
+//             + Create Playlist
+//           </button>
+//         </div>
+
+//         {/* Playlist Grid */}
+//         {data.length > 0 ? (
+//           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+//             {data.map((playlist) => (
+//               <div
+//                 key={playlist._id}
+//                 className="bg-white dark:bg-gray-800 rounded-xl shadow hover:shadow-lg transition cursor-pointer overflow-hidden"
+//                 onClick={() => navigate(`/playlist/${playlist._id}`)}
+//               >
+//                 {/* Playlist Thumbnail */}
+//                 <div className="relative">
+//                   <img
+//                     src={
+//                       playlist.thumbnail ||
+//                       "https://via.placeholder.com/300x180.png?text=Playlist"
+//                     }
+//                     alt={playlist.name}
+//                     className="w-full h-40 object-cover"
+//                   />
+//                   <span className="absolute bottom-2 right-2 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded">
+//                     {playlist.videos?.length || 0} videos
+//                   </span>
+//                 </div>
+
+//                 {/* Playlist Info */}
+//                 <div className="p-4">
+//                   <h3 className="font-semibold text-base mb-1 line-clamp-1 text-gray-900 dark:text-white">
+//                     {playlist.name}
+//                   </h3>
+//                   <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
+//                     {playlist.description}
+//                   </p>
+//                   <p className="text-xs text-gray-400 mt-2">
+//                     Created on{" "}
+//                     {new Date(playlist.createdAt).toLocaleDateString()}
+//                   </p>
+//                 </div>
+//               </div>
+//             ))}
+//           </div>
+//         ) : (
+//           <h1 className="text-lg text-gray-600 dark:text-gray-300">
+//             Loading playlists...
+//           </h1>
+//         )}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default AllPlayList;
