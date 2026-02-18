@@ -1,106 +1,106 @@
-import React, { useEffect, useState } from "react";
-import api from "../Api/api";
-import { Link } from "react-router-dom";
+// import React, { useEffect, useState } from "react";
+// import api from "../Api/api";
+// import { Link } from "react-router-dom";
 
-const Home = () => {
-  const [videos, setVideos] = useState([]);
-  const [playingVideo, setPlayingVideo] = useState(null); // store currently playing video ID
+// const Home = () => {
+//   const [videos, setVideos] = useState([]);
+//   const [playingVideo, setPlayingVideo] = useState(null); // store currently playing video ID
 
-  const fetchVideos = async () => {
-    try {
-      const response = await api.get("/videos");
-      setVideos(response.data.data.videos);
-    } catch (error) {
-      console.log(error.response?.data?.message || error.message);
-    }
-  };
+//   const fetchVideos = async () => {
+//     try {
+//       const response = await api.get("/videos");
+//       setVideos(response.data.data.videos);
+//     } catch (error) {
+//       console.log(error.response?.data?.message || error.message);
+//     }
+//   };
 
-  useEffect(() => {
-    fetchVideos();
-  }, []);
+//   useEffect(() => {
+//     fetchVideos();
+//   }, []);
 
-  return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <h1 className="text-3xl font-bold mb-6">All Videos</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {videos.length > 0 ? (
-          videos.map((video) => (
-            <div
-              key={video._id}
-              className="bg-white shadow rounded-lg overflow-hidden relative"
-            >
-              {playingVideo === video._id ? (
-                // Video player
-                <video
-                  src={video.videoFile}
-                  controls
-                  autoPlay
-                  className="w-full h-48 object-cover bg-black"
-                  onEnded={() => setPlayingVideo(null)} // reset thumbnail after video ends
-                />
-              ) : (
-                // Thumbnail with play button
-                <div
-                  className="relative cursor-pointer"
-                  onClick={() => setPlayingVideo(video._id)}
-                >
-                  <img
-                    src={video.thumbnail}
-                    alt={video.title}
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="bg-white bg-opacity-75 rounded-full p-3">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-10 w-10 text-red-600"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M8 5v14l11-7z" />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-              )}
+//   return (
+//     <div className="min-h-screen bg-gray-100 p-6">
+//       <h1 className="text-3xl font-bold mb-6">All Videos</h1>
+//       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+//         {videos.length > 0 ? (
+//           videos.map((video) => (
+//             <div
+//               key={video._id}
+//               className="bg-white shadow rounded-lg overflow-hidden relative"
+//             >
+//               {playingVideo === video._id ? (
+//                 // Video player
+//                 <video
+//                   src={video.videoFile}
+//                   controls
+//                   autoPlay
+//                   className="w-full h-48 object-cover bg-black"
+//                   onEnded={() => setPlayingVideo(null)} // reset thumbnail after video ends
+//                 />
+//               ) : (
+//                 // Thumbnail with play button
+//                 <div
+//                   className="relative cursor-pointer"
+//                   onClick={() => setPlayingVideo(video._id)}
+//                 >
+//                   <img
+//                     src={video.thumbnail}
+//                     alt={video.title}
+//                     className="w-full h-48 object-cover"
+//                   />
+//                   <div className="absolute inset-0 flex items-center justify-center">
+//                     <div className="bg-white bg-opacity-75 rounded-full p-3">
+//                       <svg
+//                         xmlns="http://www.w3.org/2000/svg"
+//                         className="h-10 w-10 text-red-600"
+//                         fill="currentColor"
+//                         viewBox="0 0 24 24"
+//                       >
+//                         <path d="M8 5v14l11-7z" />
+//                       </svg>
+//                     </div>
+//                   </div>
+//                 </div>
+//               )}
 
-              <div className="p-4">
-                <h2 className="text-lg font-semibold">{video.title}</h2>
-                <p className="text-sm text-gray-500">{video.description}</p>
-                <div className="flex items-center mt-2">
-                  <img
-                    src={video.owner.avatar}
-                    alt={video.owner.username}
-                    className="w-8 h-8 rounded-full mr-2"
-                  />
-                  <span className="text-sm font-medium">
-                    {video.owner.fullName}
-                  </span>
-                </div>
-                <div className="flex justify-between mt-2 text-sm text-gray-400">
-                  <span>Views: {video.views}</span>
-                  <span>Duration: {video.duration}s</span>
-                  <span>{video.isPublished ? "Published" : "Draft"}</span>
-                </div>
-              </div>
-            </div>
-          ))
-        ) : (
-          <div className="flex flex-col items-center justify-center p-6 bg-white dark:bg-gray-800 rounded-xl shadow-md">
-            <p className="text-lg font-medium text-gray-800 dark:text-gray-200 mb-4">
-              No videos available. Please login
-            </p>
-            <Link
-              to="/login"
-              className="px-6 py-2 bg-red-600 text-white font-semibold rounded-lg shadow hover:bg-red-700 transition duration-200"
-            >
-              Login
-            </Link>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
+//               <div className="p-4">
+//                 <h2 className="text-lg font-semibold">{video.title}</h2>
+//                 <p className="text-sm text-gray-500">{video.description}</p>
+//                 <div className="flex items-center mt-2">
+//                   <img
+//                     src={video.owner.avatar}
+//                     alt={video.owner.username}
+//                     className="w-8 h-8 rounded-full mr-2"
+//                   />
+//                   <span className="text-sm font-medium">
+//                     {video.owner.fullName}
+//                   </span>
+//                 </div>
+//                 <div className="flex justify-between mt-2 text-sm text-gray-400">
+//                   <span>Views: {video.views}</span>
+//                   <span>Duration: {video.duration}s</span>
+//                   <span>{video.isPublished ? "Published" : "Draft"}</span>
+//                 </div>
+//               </div>
+//             </div>
+//           ))
+//         ) : (
+//           <div className="flex flex-col items-center justify-center p-6 bg-white dark:bg-gray-800 rounded-xl shadow-md">
+//             <p className="text-lg font-medium text-gray-800 dark:text-gray-200 mb-4">
+//               No videos available. Please login
+//             </p>
+//             <Link
+//               to="/login"
+//               className="px-6 py-2 bg-red-600 text-white font-semibold rounded-lg shadow hover:bg-red-700 transition duration-200"
+//             >
+//               Login
+//             </Link>
+//           </div>
+//         )}
+//       </div>
+//     </div>
+//   );
+// };
 
-export default Home;
+// export default Home;
